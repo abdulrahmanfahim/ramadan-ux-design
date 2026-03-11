@@ -11,7 +11,7 @@
             </div>
             <div class="ramadan-audio" style="display: none;">
                 <audio id="ramadanSong" preload="metadata" loop>
-                    <source src="/static/description/song.mp3" type="audio/mpeg">
+                    <source src="/ramadan_ux_design/static/description/song.mp3" type="audio/mpeg"/>
                 </audio>
             </div>
             <div class="music-player-panel" id="musicPlayerPanel">
@@ -21,7 +21,7 @@
                         <button class="play-pause-btn" id="playPauseBtn">
                             <i class="fa fa-play"></i>
                         </button>
-                        <input type="range" class="seek-slider" id="seekSlider" value="0" step="0.1" min="0">
+                        <input type="range" class="seek-slider" id="seekSlider" value="0" step="0.1" min="0"/>
                     </div>
                 </div>
                 <div class="panel-toggle" id="panelToggle">
