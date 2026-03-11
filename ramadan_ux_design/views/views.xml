@@ -263,7 +263,8 @@
             </div>
         </xpath>
         <xpath expr="//body" position="after">
-            <script>
+            <script type="text/javascript">
+                <![CDATA[
                 (function() {
                     function generateStars() {
                         var starfield = document.querySelector('.starfield');
@@ -341,6 +342,7 @@
                         initMusicPlayer();
                     }
                 })();
+                ]]>
             </script>
         </xpath>
     </template>
