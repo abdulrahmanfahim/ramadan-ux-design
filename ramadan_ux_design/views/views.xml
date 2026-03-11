@@ -1,8 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="ramadan_theme_layout" name="Ramadan Theme Elements" inherit_id="website.layout" priority="50">
+        <xpath expr="//head" position="inside">
+            <style>
+                /* Ramadan Theme CSS */
+                body {
+                    background: linear-gradient(to bottom, #0a0f1e, #1a1f2e) !important;
+                    position: relative;
+                    min-height: 100vh;
+                    color: #f5e6d3;
+                }
+
+                .starfield {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    z-index: -1;
+                }
+
+                .star {
+                    position: absolute;
+                    background-color: #ffd966;
+                    width: 2px;
+                    height: 2px;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.8);
+                    animation: twinkle 3s infinite ease-in-out, fall 20s linear infinite;
+                }
+
+                .star.large {
+                    width: 4px;
+                    height: 4px;
+                    box-shadow: 0 0 12px 4px #ffb347;
+                    animation-duration: 5s, 25s;
+                }
+
+                .crescent-moon {
+                    position: absolute;
+                    top: 20px;
+                    right: 30px;
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background: radial-gradient(circle at 35% 35%, #fff9e6, #ffe68f);
+                    box-shadow: 0 0 20px 10px rgba(255, 230, 140, 0.6);
+                    z-index: 10;
+                }
+                .crescent-moon::after {
+                    content: '';
+                    position: absolute;
+                    top: -8px;
+                    left: -8px;
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 50%;
+                    background: #0a0f1e;
+                    z-index: 11;
+                }
+
+                .lantern {
+                    position: absolute;
+                    bottom: 30px;
+                    width: 40px;
+                    height: 60px;
+                    background: #e6b800;
+                    border-radius: 20px 20px 10px 10px;
+                    box-shadow: 0 0 30px 10px #ffaa33;
+                    animation: float 4s infinite alternate;
+                    z-index: 10;
+                }
+                .lantern::before {
+                    content: '';
+                    position: absolute;
+                    top: -15px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 10px;
+                    height: 20px;
+                    background: #8b6913;
+                    border-radius: 5px;
+                }
+                .lantern::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -8px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 20px;
+                    height: 8px;
+                    background: #8b6913;
+                    border-radius: 4px;
+                }
+                .left-lantern {
+                    left: 20px;
+                }
+                .right-lantern {
+                    right: 20px;
+                }
+
+                @keyframes twinkle {
+                    0%, 100% { opacity: 0.8; transform: scale(1); }
+                    50% { opacity: 0.3; transform: scale(0.8); }
+                }
+                @keyframes fall {
+                    0% { transform: translateY(-10vh) rotate(0deg); }
+                    100% { transform: translateY(110vh) rotate(360deg); }
+                }
+                @keyframes float {
+                    from { transform: translateY(0); }
+                    to { transform: translateY(-15px); }
+                }
+
+                .navbar {
+                    position: relative;
+                    z-index: 20 !important;
+                    background-color: rgba(0,0,0,0.3) !important;
+                    backdrop-filter: blur(5px);
+                }
+                #wrap {
+                    position: relative;
+                    z-index: 15;
+                    background-color: rgba(10,15,30,0.6);
+                    border-radius: 10px;
+                    margin: 20px;
+                    padding: 20px;
+                }
+
+                .music-player-panel {
+                    position: fixed;
+                    top: 50%;
+                    right: 0;
+                    transform: translateY(-50%) translateX(100%);
+                    transition: transform 0.4s ease;
+                    z-index: 100;
+                    display: flex;
+                    align-items: center;
+                }
+                .music-player-panel.open {
+                    transform: translateY(-50%) translateX(0);
+                }
+                .panel-content {
+                    background: rgba(20, 30, 40, 0.9);
+                    backdrop-filter: blur(8px);
+                    border: 1px solid #ffd966;
+                    border-right: none;
+                    border-radius: 20px 0 0 20px;
+                    padding: 15px 25px;
+                    box-shadow: -5px 5px 15px rgba(0,0,0,0.5);
+                    color: #f5e6d3;
+                    width: 250px;
+                }
+                .song-title {
+                    margin: 0 0 10px 0;
+                    font-size: 1.2rem;
+                    color: #ffd966;
+                    text-align: center;
+                    font-family: 'Amiri', serif;
+                }
+                .player-controls {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .play-pause-btn {
+                    background: #ffd966;
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    color: #1a1f2e;
+                    transition: transform 0.2s;
+                    flex-shrink: 0;
+                }
+                .play-pause-btn:hover {
+                    transform: scale(1.1);
+                    background: #ffb347;
+                }
+                .seek-slider {
+                    flex: 1;
+                    height: 5px;
+                    -webkit-appearance: none;
+                    background: linear-gradient(to right, #ffd966, #ffaa33);
+                    border-radius: 5px;
+                    outline: none;
+                }
+                .seek-slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    width: 15px;
+                    height: 15px;
+                    background: #fff;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    box-shadow: 0 0 5px #ffd966;
+                }
+                .seek-slider::-moz-range-thumb {
+                    width: 15px;
+                    height: 15px;
+                    background: #fff;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    border: none;
+                }
+                .panel-toggle {
+                    background: #ffd966;
+                    color: #1a1f2e;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 0 25px 25px 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+                    font-size: 1.8rem;
+                    transition: background 0.3s, transform 0.3s;
+                    margin-left: -1px;
+                }
+                .panel-toggle:hover {
+                    background: #ffb347;
+                }
+                .music-player-panel.open .panel-toggle i {
+                    transform: rotate(180deg);
+                }
+                .panel-toggle i {
+                    transition: transform 0.4s;
+                }
+            </style>
+        </xpath>
         <xpath expr="//body" position="inside">
-            <!-- Ramadan decorations container -->
             <div class="ramadan-decorations" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;">
                 <div class="starfield"></div>
                 <div class="crescent-moon"></div>
@@ -28,6 +261,87 @@
                     <i class="fa fa-music"></i>
                 </div>
             </div>
+        </xpath>
+        <xpath expr="//body" position="after">
+            <script>
+                (function() {
+                    function generateStars() {
+                        var starfield = document.querySelector('.starfield');
+                        if (!starfield) return;
+                        var numberOfStars = 100;
+                        for (var i = 0; i < numberOfStars; i++) {
+                            var star = document.createElement('div');
+                            star.className = 'star';
+                            if (i % 7 === 0) star.classList.add('large');
+                            star.style.left = Math.random() * 100 + '%';
+                            star.style.top = Math.random() * 100 + '%';
+                            star.style.animationDelay = Math.random() * 5 + 's, ' + Math.random() * 10 + 's';
+                            starfield.appendChild(star);
+                        }
+                    }
+
+                    function initMusicPlayer() {
+                        var panel = document.getElementById('musicPlayerPanel');
+                        var toggle = document.getElementById('panelToggle');
+                        var audio = document.getElementById('ramadanSong');
+                        var playPauseBtn = document.getElementById('playPauseBtn');
+                        var seekSlider = document.getElementById('seekSlider');
+
+                        if (!panel || !toggle || !audio || !playPauseBtn || !seekSlider) return;
+
+                        toggle.addEventListener('click', function() {
+                            panel.classList.toggle('open');
+                        });
+
+                        playPauseBtn.addEventListener('click', function() {
+                            if (audio.paused) {
+                                audio.play().catch(e => console.log('Play failed:', e));
+                                playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+                            } else {
+                                audio.pause();
+                                playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
+                            }
+                        });
+
+                        audio.addEventListener('loadedmetadata', function() {
+                            seekSlider.max = audio.duration;
+                        });
+
+                        audio.addEventListener('timeupdate', function() {
+                            if (!seekSlider.dragging) {
+                                seekSlider.value = audio.currentTime;
+                            }
+                        });
+
+                        seekSlider.addEventListener('input', function() {
+                            audio.currentTime = seekSlider.value;
+                        });
+
+                        seekSlider.addEventListener('mousedown', function() {
+                            seekSlider.dragging = true;
+                        });
+                        seekSlider.addEventListener('mouseup', function() {
+                            seekSlider.dragging = false;
+                        });
+
+                        audio.addEventListener('ended', function() {
+                            playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
+                            seekSlider.value = 0;
+                        });
+                    }
+
+                    // Run when DOM is ready
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', function() {
+                            generateStars();
+                            initMusicPlayer();
+                        });
+                    } else {
+                        generateStars();
+                        initMusicPlayer();
+                    }
+                })();
+            </script>
         </xpath>
     </template>
 </odoo>

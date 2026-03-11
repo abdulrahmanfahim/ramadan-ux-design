@@ -1,18 +1,17 @@
 {
     'name': 'Ramadan Website UX Design',
-    'version': '1.97',
+    'version': '1.0',
     'summary': 'Add Ramadan effects to your Odoo website: golden stars, crescent, lanterns, and audio.',
     'category': 'Website',
-    'author': 'Abdulrahman Fahim',
-    'website': 'https://abdulrahmanfahim.github.io',
+    'author': 'Your Name',
+    'website': 'https://yourwebsite.com',
     'depends': ['website'],
     'data': [
         'views/views.xml',
     ],
     'assets': {
         'web.assets_frontend': [
-            'static/src/css/ramadan_ux.css',
-            'static/src/js/ramadan_ux.js',
+            # CSS and JS are now embedded directly in views.xml
         ],
     },
     'images': ['static/description/icon.png'],
