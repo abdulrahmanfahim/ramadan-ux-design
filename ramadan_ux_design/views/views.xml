@@ -12,6 +12,7 @@
                     overflow-x: hidden;
                 }
 
+                /* --- Fanoos (Lanterns) Replicated from Image --- */
                 .fanoos-container {
                     position: absolute;
                     display: flex;
@@ -21,11 +22,14 @@
                     transform-origin: top center;
                     z-index: 10;
                     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    will-change: transform, filter; /* GPU optimized */
                 }
 
+                /* Enhanced Hover Glow Effect */
                 .fanoos-container:hover {
                     filter: drop-shadow(0 0 20px #ffaa00);
                     transform: scale(1.1) rotate(0deg) !important;
+                    cursor: pointer;
                 }
 
                 @keyframes lampSwing {
@@ -33,6 +37,42 @@
                     50% { transform: rotate(3deg); }
                 }
 
+                /* The Chain/Wire */
+                .fanoos-chain { 
+                    width: 2px; 
+                    height: 150px; 
+                    background: linear-gradient(to bottom, #4a3b1a, #b8860b); 
+                }
+
+                /* Main Fanoos Shape */
+                .fanoos { 
+                    position: relative; 
+                    width: 60px; 
+                    height: 100px; 
+                }
+
+                /* Top Cap */
+                .fanoos-top { 
+                    position: absolute; 
+                    top: -25px; left: 50%; 
+                    transform: translateX(-50%); 
+                    width: 40px; height: 30px; 
+                    background: #1a1a1a; 
+                    clip-path: polygon(20% 100%, 80% 100%, 100% 50%, 50% 0%, 0% 50%); 
+                    border-bottom: 2px solid #d4af37; 
+                }
+
+                /* Main Body - Geometric Cutouts */
+                .fanoos-body { 
+                    width: 100%; 
+                    height: 100%; 
+                    background: #1a1a1a; 
+                    clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 75%, 85% 100%, 15% 100%, 0% 75%, 0% 25%); 
+                    border: 1px solid #d4af37; 
+                    position: relative; 
+                }
+
+                /* Pulsing Light from Within */
                 .fanoos-body::before {
                     content: '';
                     position: absolute;
@@ -40,6 +80,7 @@
                     background: radial-gradient(circle, #fff3b0 0%, #ffaa00 60%, #805500 100%);
                     clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
                     animation: lanternPulse 3s infinite ease-in-out;
+                    will-change: opacity, filter;
                 }
 
                 @keyframes lanternPulse {
@@ -47,15 +88,45 @@
                     50% { opacity: 1; filter: brightness(1.4); }
                 }
 
+                /* Bottom Taper & Droplet */
+                .fanoos-droplet { 
+                    position: absolute; 
+                    bottom: -25px; left: 50%; 
+                    transform: translateX(-50%); 
+                    width: 8px; height: 12px; 
+                    background: #ffcc33; 
+                    border-radius: 50%; 
+                    box-shadow: 0 0 10px #ffaa00; 
+                }
+
+                /* Specific Fanoos Placements */
+                .lamp-1 { left: 10%; }
+                .lamp-2 { left: 50%; animation-duration: 4.5s; } /* Varying swing speeds */
+                .lamp-2 .fanoos-chain { height: 210px; } /* Different chain lengths */
+                .lamp-3 { left: 90%; }
+
+                /* Static Decoration Styles */
+                .crescent-moon { 
+                    position: absolute; 
+                    top: 100px; left: 20%; 
+                    width: 120px; height: 120px; 
+                    border-radius: 50%; 
+                    box-shadow: -20px 15px 0 0 #fff9e6; 
+                    transform: rotate(-15deg); 
+                    filter: blur(1px); 
+                }
+
+                /* --- Music Panel - Smooth Sliding & Interactivity --- */
                 .music-player-panel {
                     position: fixed;
                     top: 50%;
-                    right: -310px; /* Fully hide content (310px width) */
+                    right: -310px; /* Fully hide the 310px wide content */
                     transform: translateY(-50%);
                     display: flex;
                     align-items: center;
                     z-index: 2000;
-                    transition: right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    transition: right 0.7s cubic-bezier(0.65, 0, 0.35, 1); /* Elegant Bezier */
+                    will-change: right;
                 }
 
                 .music-player-panel.open {
@@ -72,18 +143,24 @@
                     justify-content: center;
                     cursor: pointer;
                     border-radius: 20px 0 0 20px;
-                    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                    box-shadow: -8px 0 25px rgba(0,0,0,0.6);
                     border: 1px solid #ffcc33;
                     border-right: none;
+                    transition: all 0.3s ease;
+                }
+
+                .panel-toggle:hover {
+                    background: linear-gradient(135deg, #ffcc33, #d4af37);
                 }
 
                 .panel-content {
                     width: 310px;
                     background: rgba(8, 20, 15, 0.95);
-                    backdrop-filter: blur(15px);
+                    backdrop-filter: blur(20px);
                     padding: 25px;
                     border-left: 3px solid #d4af37;
-                    box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+                    box-shadow: -15px 0 40px rgba(0,0,0,0.7);
+                    transition: backdrop-filter 0.3s ease;
                 }
 
                 .play-pause-btn {
@@ -93,22 +170,21 @@
                     width: 50px;
                     height: 50px;
                     cursor: pointer;
-                    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    color: #020d0b;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Snappy scale effect */
                 }
 
-                .play-pause-btn:hover { transform: scale(1.1); background: #ffcc33; }
-                .seek-slider { flex: 1; accent-color: #d4af37; cursor: pointer; }
+                .play-pause-btn:hover { 
+                    transform: scale(1.15); 
+                    background: #ffcc33; 
+                }
 
-                /* Static Decorations */
-                .fanoos-chain { width: 2px; height: 150px; background: linear-gradient(to bottom, #4a3b1a, #b8860b); }
-                .fanoos { position: relative; width: 60px; height: 100px; }
-                .fanoos-top { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 40px; height: 30px; background: #1a1a1a; clip-path: polygon(20% 100%, 80% 100%, 100% 50%, 50% 0%, 0% 50%); border-bottom: 2px solid #d4af37; }
-                .fanoos-body { width: 100%; height: 100%; background: #1a1a1a; clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 75%, 85% 100%, 15% 100%, 0% 75%, 0% 25%); border: 1px solid #d4af37; position: relative; }
-                .fanoos-droplet { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); width: 8px; height: 12px; background: #ffcc33; border-radius: 50%; box-shadow: 0 0 10px #ffaa00; }
-                .lamp-1 { left: 10%; }
-                .lamp-2 { left: 50%; }
-                .lamp-3 { left: 90%; }
-                .crescent-moon { position: absolute; top: 100px; left: 20%; width: 120px; height: 120px; border-radius: 50%; box-shadow: -20px 15px 0 0 #fff9e6; transform: rotate(-15deg); filter: blur(1px); }
+                .seek-slider { 
+                    flex: 1; 
+                    accent-color: #d4af37; 
+                    cursor: pointer; 
+                }
                 ]]>
             </style>
         </xpath>
@@ -117,7 +193,7 @@
             <div class="ramadan-decorations">
                 <div class="crescent-moon"></div>
                 <t t-foreach="[1, 2, 3]" t-as="i">
-                    <div t-attf-class="fanoos-container lamp-{{i}}">
+                    <div t-attf-class="fanoos-container lamp-#{i}">
                         <div class="fanoos-chain"></div>
                         <div class="fanoos">
                             <div class="fanoos-top"></div>
@@ -130,10 +206,10 @@
 
             <div class="music-player-panel" id="musicPlayerPanel">
                 <div class="panel-toggle" id="panelToggle">
-                    <i class="fa fa-chevron-left" id="toggleIcon" style="transition: transform 0.4s;"></i>
+                    <i class="fa fa-chevron-left" id="toggleIcon" style="transition: transform 0.6s;"></i>
                 </div>
                 <div class="panel-content">
-                    <h5 style="text-align:center; color:#d4af37; margin-bottom:15px;">RAMADAN KAREEM</h5>
+                    <h5 style="text-align:center; color:#d4af37; font-family:serif; margin-bottom:15px; letter-spacing: 1px;">🌙 RAMADAN KAREEM</h5>
                     <div style="display:flex; align-items:center; gap:15px;">
                         <button class="play-pause-btn" id="playPauseBtn">
                             <i class="fa fa-play"></i>
@@ -158,14 +234,16 @@
                     const btn = document.getElementById('playPauseBtn');
                     const slider = document.getElementById('seekSlider');
 
+                    // Sliding Panel and Icon Flip
                     toggle.addEventListener('click', () => {
                         panel.classList.toggle('open');
                         icon.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
                     });
 
+                    // Audio Controls and Icon Smooth Change
                     btn.addEventListener('click', () => {
                         if (audio.paused) {
-                            audio.play();
+                            audio.play().catch(e => console.log("Play blocked by browser, wait for user interaction."));
                             btn.innerHTML = '<i class="fa fa-pause"></i>';
                         } else {
                             audio.pause();
@@ -173,6 +251,7 @@
                         }
                     });
 
+                    // Update slider as music plays
                     audio.addEventListener('timeupdate', () => {
                         if (!isNaN(audio.duration)) {
                             slider.max = audio.duration;
@@ -180,6 +259,7 @@
                         }
                     });
 
+                    // Seek to position on slider input
                     slider.addEventListener('input', () => {
                         audio.currentTime = slider.value;
                     });
