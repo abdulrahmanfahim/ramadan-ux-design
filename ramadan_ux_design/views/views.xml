@@ -2,7 +2,8 @@
 <odoo>
     <template id="ramadan_theme_layout" name="Ramadan Theme Elements" inherit_id="website.layout" priority="50">
         <xpath expr="//head" position="inside">
-            <style>
+            <style type="text/css">
+                <![CDATA[
                 body {
                     background: radial-gradient(circle at center, #0a2e28 0%, #020d0b 100%) !important;
                     position: relative;
@@ -11,7 +12,6 @@
                     overflow-x: hidden;
                 }
 
-                /* --- Animations & Smoothness --- */
                 .fanoos-container {
                     position: absolute;
                     display: flex;
@@ -20,15 +20,12 @@
                     animation: lampSwing 5s infinite ease-in-out;
                     transform-origin: top center;
                     z-index: 10;
-                    transition: filter 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                    will-change: transform, filter;
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
-                /* Enhanced Hover Glow */
                 .fanoos-container:hover {
-                    filter: drop-shadow(0 0 15px #ffaa00);
-                    transform: scale(1.05) rotate(0deg) !important;
-                    cursor: pointer;
+                    filter: drop-shadow(0 0 20px #ffaa00);
+                    transform: scale(1.1) rotate(0deg) !important;
                 }
 
                 @keyframes lampSwing {
@@ -43,26 +40,22 @@
                     background: radial-gradient(circle, #fff3b0 0%, #ffaa00 60%, #805500 100%);
                     clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
                     animation: lanternPulse 3s infinite ease-in-out;
-                    will-change: opacity, filter;
                 }
 
                 @keyframes lanternPulse {
-                    0%, 100% { opacity: 0.6; filter: brightness(0.8) blur(1px); }
-                    50% { opacity: 1; filter: brightness(1.4) blur(0px); }
+                    0%, 100% { opacity: 0.6; filter: brightness(0.8); }
+                    50% { opacity: 1; filter: brightness(1.4); }
                 }
 
-                /* --- Music Panel Logic --- */
                 .music-player-panel {
                     position: fixed;
                     top: 50%;
-                    right: -310px; 
+                    right: -310px; /* Fully hide content (310px width) */
                     transform: translateY(-50%);
                     display: flex;
                     align-items: center;
                     z-index: 2000;
-                    /* Ultra-smooth Bezier Curve */
-                    transition: right 0.7s cubic-bezier(0.65, 0, 0.35, 1);
-                    will-change: right;
+                    transition: right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
                 }
 
                 .music-player-panel.open {
@@ -79,26 +72,20 @@
                     justify-content: center;
                     cursor: pointer;
                     border-radius: 20px 0 0 20px;
-                    box-shadow: -8px 0 25px rgba(0,0,0,0.6);
+                    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
                     border: 1px solid #ffcc33;
                     border-right: none;
-                    transition: background 0.3s ease;
-                }
-
-                .panel-toggle:hover {
-                    background: linear-gradient(135deg, #ffcc33, #d4af37);
                 }
 
                 .panel-content {
                     width: 310px;
-                    background: rgba(8, 18, 14, 0.92);
-                    backdrop-filter: blur(20px);
+                    background: rgba(8, 20, 15, 0.95);
+                    backdrop-filter: blur(15px);
                     padding: 25px;
                     border-left: 3px solid #d4af37;
-                    box-shadow: -15px 0 40px rgba(0,0,0,0.7);
+                    box-shadow: -10px 0 30px rgba(0,0,0,0.6);
                 }
 
-                /* --- Controls --- */
                 .play-pause-btn {
                     background: #d4af37;
                     border: none;
@@ -106,25 +93,13 @@
                     width: 50px;
                     height: 50px;
                     cursor: pointer;
-                    color: #020d0b;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 }
 
-                .play-pause-btn:hover { 
-                    transform: scale(1.15);
-                    background: #ffcc33;
-                }
+                .play-pause-btn:hover { transform: scale(1.1); background: #ffcc33; }
+                .seek-slider { flex: 1; accent-color: #d4af37; cursor: pointer; }
 
-                .seek-slider {
-                    flex: 1;
-                    accent-color: #d4af37;
-                    height: 6px;
-                    cursor: pointer;
-                    transition: opacity 0.2s;
-                }
-
-                /* Decorations Static Styles */
+                /* Static Decorations */
                 .fanoos-chain { width: 2px; height: 150px; background: linear-gradient(to bottom, #4a3b1a, #b8860b); }
                 .fanoos { position: relative; width: 60px; height: 100px; }
                 .fanoos-top { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 40px; height: 30px; background: #1a1a1a; clip-path: polygon(20% 100%, 80% 100%, 100% 50%, 50% 0%, 0% 50%); border-bottom: 2px solid #d4af37; }
@@ -133,7 +108,8 @@
                 .lamp-1 { left: 10%; }
                 .lamp-2 { left: 50%; }
                 .lamp-3 { left: 90%; }
-                .crescent-moon { position: absolute; top: 100px; left: 25%; width: 120px; height: 120px; border-radius: 50%; box-shadow: -20px 15px 0 0 #fff9e6; transform: rotate(-15deg); z-index: 1; filter: blur(1px); }
+                .crescent-moon { position: absolute; top: 100px; left: 20%; width: 120px; height: 120px; border-radius: 50%; box-shadow: -20px 15px 0 0 #fff9e6; transform: rotate(-15deg); filter: blur(1px); }
+                ]]>
             </style>
         </xpath>
 
@@ -141,7 +117,7 @@
             <div class="ramadan-decorations">
                 <div class="crescent-moon"></div>
                 <t t-foreach="[1, 2, 3]" t-as="i">
-                    <div t-attf-class="fanoos-container lamp-#{i}">
+                    <div t-attf-class="fanoos-container lamp-{{i}}">
                         <div class="fanoos-chain"></div>
                         <div class="fanoos">
                             <div class="fanoos-top"></div>
@@ -154,10 +130,10 @@
 
             <div class="music-player-panel" id="musicPlayerPanel">
                 <div class="panel-toggle" id="panelToggle">
-                    <i class="fa fa-chevron-left" id="toggleIcon" style="transition: transform 0.6s;"></i>
+                    <i class="fa fa-chevron-left" id="toggleIcon" style="transition: transform 0.4s;"></i>
                 </div>
                 <div class="panel-content">
-                    <h5 style="text-align:center; color:#d4af37; font-family:serif; margin-bottom:15px; letter-spacing: 1px;">🌙 RAMADAN KAREEM</h5>
+                    <h5 style="text-align:center; color:#d4af37; margin-bottom:15px;">RAMADAN KAREEM</h5>
                     <div style="display:flex; align-items:center; gap:15px;">
                         <button class="play-pause-btn" id="playPauseBtn">
                             <i class="fa fa-play"></i>
@@ -173,6 +149,7 @@
 
         <xpath expr="//body" position="after">
             <script type="text/javascript">
+                <![CDATA[
                 document.addEventListener('DOMContentLoaded', function() {
                     const panel = document.getElementById('musicPlayerPanel');
                     const toggle = document.getElementById('panelToggle');
@@ -207,6 +184,7 @@
                         audio.currentTime = slider.value;
                     });
                 });
+                ]]>
             </script>
         </xpath>
     </template>
