@@ -3,523 +3,210 @@
     <template id="ramadan_theme_layout" name="Ramadan Theme Elements" inherit_id="website.layout" priority="50">
         <xpath expr="//head" position="inside">
             <style>
-                /* Ramadan Theme CSS */
                 body {
-                    background: linear-gradient(to bottom, #0a0f1e, #1a1f2e) !important;
+                    background: radial-gradient(circle at center, #0a2e28 0%, #020d0b 100%) !important;
                     position: relative;
                     min-height: 100vh;
                     color: #f5e6d3;
+                    overflow-x: hidden;
                 }
 
-                .starfield {
+                /* --- Animations & Smoothness --- */
+                .fanoos-container {
                     position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    overflow: hidden;
-                    z-index: -1;
-                }
-
-                .star {
-                    position: absolute;
-                    background-color: #ffd966;
-                    width: 2px;
-                    height: 2px;
-                    border-radius: 50%;
-                    box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.8);
-                    animation: twinkle 3s infinite ease-in-out, fall 20s linear infinite;
-                }
-
-                .star.large {
-                    width: 4px;
-                    height: 4px;
-                    box-shadow: 0 0 12px 4px #ffb347;
-                    animation-duration: 5s, 25s;
-                }
-
-                .star.golden-crescent {
-                    width: 8px;
-                    height: 8px;
-                    background: transparent;
-                    box-shadow: none;
-                    animation: rotateCrescent 10s linear infinite;
-                }
-                
-                .star.golden-crescent::before {
-                    content: "☪";
-                    color: #ffd700;
-                    font-size: 20px;
-                    text-shadow: 0 0 20px #ffaa00, 0 0 40px #ffaa00;
-                    position: absolute;
-                    transform: translate(-50%, -50%);
-                }
-
-                .crescent-moon {
-                    position: absolute;
-                    top: 20px;
-                    right: 30px;
-                    width: 80px;
-                    height: 80px;
-                    border-radius: 50%;
-                    background: radial-gradient(circle at 35% 35%, #fff9e6, #ffd700);
-                    box-shadow: 0 0 30px 15px rgba(255, 215, 0, 0.8), 0 0 60px 30px rgba(255, 200, 0, 0.4);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    animation: lampSwing 5s infinite ease-in-out;
+                    transform-origin: top center;
                     z-index: 10;
-                    animation: moonGlow 4s infinite alternate;
-                }
-                .crescent-moon::after {
-                    content: '';
-                    position: absolute;
-                    top: -10px;
-                    left: -10px;
-                    width: 90px;
-                    height: 90px;
-                    border-radius: 50%;
-                    background: #0a0f1e;
-                    z-index: 11;
-                }
-                .crescent-moon::before {
-                    content: "✨";
-                    position: absolute;
-                    top: -30px;
-                    right: -30px;
-                    font-size: 40px;
-                    color: gold;
-                    text-shadow: 0 0 20px gold;
-                    z-index: 12;
-                    animation: sparkle 2s infinite;
+                    transition: filter 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    will-change: transform, filter;
                 }
 
-                @keyframes moonGlow {
-                    0% { box-shadow: 0 0 30px 15px rgba(255, 215, 0, 0.8), 0 0 60px 30px rgba(255, 200, 0, 0.4); }
-                    100% { box-shadow: 0 0 40px 20px rgba(255, 225, 0, 1), 0 0 80px 40px rgba(255, 215, 0, 0.6); }
-                }
-
-                @keyframes rotateCrescent {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-
-                @keyframes sparkle {
-                    0%, 100% { opacity: 1; transform: scale(1); }
-                    50% { opacity: 0.5; transform: scale(1.2); }
-                }
-
-                /* Arabic Lamps */
-                .arabic-lamp {
-                    position: absolute;
-                    width: 50px;
-                    height: 80px;
-                    background: linear-gradient(135deg, #d4af37, #b8860b);
-                    border-radius: 50% 50% 30% 30% / 60% 60% 30% 30%;
-                    box-shadow: 0 0 30px 10px #ffaa00;
-                    z-index: 10;
-                    animation: lampSwing 5s infinite alternate ease-in-out;
-                }
-                
-                .arabic-lamp::before {
-                    content: "";
-                    position: absolute;
-                    top: -15px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 15px;
-                    height: 25px;
-                    background: linear-gradient(135deg, #b8860b, #8b6913);
-                    border-radius: 30% 30% 10% 10%;
-                }
-                
-                .arabic-lamp::after {
-                    content: "🕯️";
-                    position: absolute;
-                    bottom: -20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    font-size: 20px;
-                    filter: drop-shadow(0 0 10px orange);
-                    animation: flameFlicker 0.5s infinite alternate;
-                }
-                
-                .lamp-1 {
-                    top: 15%;
-                    left: 10%;
-                }
-                .lamp-2 {
-                    top: 25%;
-                    right: 12%;
-                }
-                .lamp-3 {
-                    bottom: 20%;
-                    left: 15%;
-                }
-                .lamp-4 {
-                    bottom: 30%;
-                    right: 18%;
-                }
-                .lamp-5 {
-                    top: 40%;
-                    left: 20%;
+                /* Enhanced Hover Glow */
+                .fanoos-container:hover {
+                    filter: drop-shadow(0 0 15px #ffaa00);
+                    transform: scale(1.05) rotate(0deg) !important;
+                    cursor: pointer;
                 }
 
                 @keyframes lampSwing {
-                    0% { transform: rotate(-3deg); }
-                    100% { transform: rotate(3deg); }
+                    0%, 100% { transform: rotate(-3deg); }
+                    50% { transform: rotate(3deg); }
                 }
 
-                @keyframes flameFlicker {
-                    0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-                    100% { opacity: 1; transform: translateX(-50%) scale(1.2); }
-                }
-
-                .lantern {
-                    position: absolute;
-                    bottom: 30px;
-                    width: 40px;
-                    height: 60px;
-                    background: #e6b800;
-                    border-radius: 20px 20px 10px 10px;
-                    box-shadow: 0 0 30px 10px #ffaa33;
-                    animation: float 4s infinite alternate;
-                    z-index: 10;
-                }
-                .lantern::before {
+                .fanoos-body::before {
                     content: '';
                     position: absolute;
-                    top: -15px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 10px;
-                    height: 20px;
-                    background: #8b6913;
-                    border-radius: 5px;
-                }
-                .lantern::after {
-                    content: '';
-                    position: absolute;
-                    bottom: -8px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 20px;
-                    height: 8px;
-                    background: #8b6913;
-                    border-radius: 4px;
-                }
-                .left-lantern {
-                    left: 20px;
-                }
-                .right-lantern {
-                    right: 20px;
+                    top: 10%; left: 10%; width: 80%; height: 80%;
+                    background: radial-gradient(circle, #fff3b0 0%, #ffaa00 60%, #805500 100%);
+                    clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
+                    animation: lanternPulse 3s infinite ease-in-out;
+                    will-change: opacity, filter;
                 }
 
-                @keyframes twinkle {
-                    0%, 100% { opacity: 0.8; transform: scale(1); }
-                    50% { opacity: 0.3; transform: scale(0.8); }
-                }
-                @keyframes fall {
-                    0% { transform: translateY(-10vh) rotate(0deg); }
-                    100% { transform: translateY(110vh) rotate(360deg); }
-                }
-                @keyframes float {
-                    from { transform: translateY(0); }
-                    to { transform: translateY(-15px); }
+                @keyframes lanternPulse {
+                    0%, 100% { opacity: 0.6; filter: brightness(0.8) blur(1px); }
+                    50% { opacity: 1; filter: brightness(1.4) blur(0px); }
                 }
 
-                .navbar {
-                    position: relative;
-                    z-index: 20 !important;
-                    background-color: rgba(0,0,0,0.3) !important;
-                    backdrop-filter: blur(5px);
-                }
-                #wrap {
-                    position: relative;
-                    z-index: 15;
-                    background-color: rgba(10,15,30,0.6);
-                    border-radius: 10px;
-                    margin: 20px;
-                    padding: 20px;
-                }
-
-                /* Music Player Panel - Fixed positioning */
+                /* --- Music Panel Logic --- */
                 .music-player-panel {
                     position: fixed;
-                    top: 0;
+                    top: 50%;
+                    right: -310px; 
+                    transform: translateY(-50%);
+                    display: flex;
+                    align-items: center;
+                    z-index: 2000;
+                    /* Ultra-smooth Bezier Curve */
+                    transition: right 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+                    will-change: right;
+                }
+
+                .music-player-panel.open {
                     right: 0;
-                    height: 100vh;
-                    display: flex;
-                    align-items: center;
-                    z-index: 1000;
-                    pointer-events: none;
                 }
-                
-                .panel-content {
-                    background: rgba(20, 30, 40, 0.95);
-                    backdrop-filter: blur(10px);
-                    border-left: 3px solid #ffd966;
-                    border-top: 1px solid #ffd966;
-                    border-bottom: 1px solid #ffd966;
-                    border-radius: 20px 0 0 20px;
-                    padding: 25px;
-                    box-shadow: -5px 0 30px rgba(0,0,0,0.7);
-                    color: #f5e6d3;
-                    width: 280px;
-                    transform: translateX(100%);
-                    transition: transform 0.4s ease;
-                    pointer-events: auto;
-                }
-                
-                .music-player-panel.open .panel-content {
-                    transform: translateX(0);
-                }
-                
-                .song-title {
-                    margin: 0 0 15px 0;
-                    font-size: 1.4rem;
-                    color: #ffd966;
-                    text-align: center;
-                    font-family: 'Amiri', 'Traditional Arabic', serif;
-                    text-shadow: 0 0 10px rgba(255,215,0,0.5);
-                }
-                
-                .player-controls {
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                }
-                
-                .play-pause-btn {
-                    background: #ffd966;
-                    border: none;
-                    border-radius: 50%;
-                    width: 48px;
-                    height: 48px;
-                    cursor: pointer;
+
+                .panel-toggle {
+                    width: 45px;
+                    height: 140px;
+                    background: linear-gradient(135deg, #d4af37, #b8860b);
+                    color: #020d0b;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 1.4rem;
-                    color: #1a1f2e;
-                    transition: all 0.2s;
-                    flex-shrink: 0;
-                    box-shadow: 0 0 15px #ffaa00;
+                    cursor: pointer;
+                    border-radius: 20px 0 0 20px;
+                    box-shadow: -8px 0 25px rgba(0,0,0,0.6);
+                    border: 1px solid #ffcc33;
+                    border-right: none;
+                    transition: background 0.3s ease;
                 }
-                .play-pause-btn:hover {
-                    transform: scale(1.1);
-                    background: #ffb347;
-                    box-shadow: 0 0 25px #ffaa00;
+
+                .panel-toggle:hover {
+                    background: linear-gradient(135deg, #ffcc33, #d4af37);
                 }
-                
+
+                .panel-content {
+                    width: 310px;
+                    background: rgba(8, 18, 14, 0.92);
+                    backdrop-filter: blur(20px);
+                    padding: 25px;
+                    border-left: 3px solid #d4af37;
+                    box-shadow: -15px 0 40px rgba(0,0,0,0.7);
+                }
+
+                /* --- Controls --- */
+                .play-pause-btn {
+                    background: #d4af37;
+                    border: none;
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                    cursor: pointer;
+                    color: #020d0b;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                }
+
+                .play-pause-btn:hover { 
+                    transform: scale(1.15);
+                    background: #ffcc33;
+                }
+
                 .seek-slider {
                     flex: 1;
+                    accent-color: #d4af37;
                     height: 6px;
-                    -webkit-appearance: none;
-                    background: linear-gradient(to right, #ffd966, #ffaa33);
-                    border-radius: 6px;
-                    outline: none;
-                }
-                .seek-slider::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    width: 18px;
-                    height: 18px;
-                    background: #fff;
-                    border-radius: 50%;
                     cursor: pointer;
-                    box-shadow: 0 0 10px #ffd966;
+                    transition: opacity 0.2s;
                 }
-                .seek-slider::-moz-range-thumb {
-                    width: 18px;
-                    height: 18px;
-                    background: #fff;
-                    border-radius: 50%;
-                    cursor: pointer;
-                    border: none;
-                    box-shadow: 0 0 10px #ffd966;
-                }
-                
-                /* Big vertically stretched toggle arrow */
-                .panel-toggle {
-                    background: linear-gradient(135deg, #ffd966, #b8860b);
-                    color: #1a1f2e;
-                    width: 40px;
-                    height: 200px;
-                    border-radius: 10px 0 0 10px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    box-shadow: -5px 5px 20px rgba(0,0,0,0.5);
-                    font-size: 2.5rem;
-                    transition: all 0.3s;
-                    margin-left: -3px;
-                    pointer-events: auto;
-                    writing-mode: vertical-rl;
-                    text-orientation: upright;
-                    border-left: 2px solid gold;
-                    border-top: 2px solid gold;
-                    border-bottom: 2px solid gold;
-                }
-                
-                .panel-toggle i {
-                    transition: transform 0.4s;
-                    font-size: 2.8rem;
-                    color: #4a2c00;
-                }
-                
-                .panel-toggle:hover {
-                    background: linear-gradient(135deg, #ffb347, #d4af37);
-                    width: 45px;
-                    box-shadow: -8px 5px 25px rgba(0,0,0,0.6);
-                }
-                
-                .music-player-panel.open .panel-toggle i {
-                    transform: rotate(180deg);
-                }
-                
-                .panel-toggle span {
-                    display: inline-block;
-                    margin-top: 10px;
-                    font-size: 1rem;
-                    letter-spacing: 2px;
-                }
+
+                /* Decorations Static Styles */
+                .fanoos-chain { width: 2px; height: 150px; background: linear-gradient(to bottom, #4a3b1a, #b8860b); }
+                .fanoos { position: relative; width: 60px; height: 100px; }
+                .fanoos-top { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 40px; height: 30px; background: #1a1a1a; clip-path: polygon(20% 100%, 80% 100%, 100% 50%, 50% 0%, 0% 50%); border-bottom: 2px solid #d4af37; }
+                .fanoos-body { width: 100%; height: 100%; background: #1a1a1a; clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 75%, 85% 100%, 15% 100%, 0% 75%, 0% 25%); border: 1px solid #d4af37; position: relative; }
+                .fanoos-droplet { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); width: 8px; height: 12px; background: #ffcc33; border-radius: 50%; box-shadow: 0 0 10px #ffaa00; }
+                .lamp-1 { left: 10%; }
+                .lamp-2 { left: 50%; }
+                .lamp-3 { left: 90%; }
+                .crescent-moon { position: absolute; top: 100px; left: 25%; width: 120px; height: 120px; border-radius: 50%; box-shadow: -20px 15px 0 0 #fff9e6; transform: rotate(-15deg); z-index: 1; filter: blur(1px); }
             </style>
         </xpath>
+
         <xpath expr="//body" position="inside">
-            <div class="ramadan-decorations" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;">
-                <div class="starfield"></div>
+            <div class="ramadan-decorations">
                 <div class="crescent-moon"></div>
-                
-                <!-- Arabic Lamps -->
-                <div class="arabic-lamp lamp-1"></div>
-                <div class="arabic-lamp lamp-2"></div>
-                <div class="arabic-lamp lamp-3"></div>
-                <div class="arabic-lamp lamp-4"></div>
-                <div class="arabic-lamp lamp-5"></div>
-                
-                <div class="lantern left-lantern"></div>
-                <div class="lantern right-lantern"></div>
+                <t t-foreach="[1, 2, 3]" t-as="i">
+                    <div t-attf-class="fanoos-container lamp-#{i}">
+                        <div class="fanoos-chain"></div>
+                        <div class="fanoos">
+                            <div class="fanoos-top"></div>
+                            <div class="fanoos-body"></div>
+                            <div class="fanoos-droplet"></div>
+                        </div>
+                    </div>
+                </t>
             </div>
-            <div class="ramadan-audio" style="display: none;">
-                <audio id="ramadanSong" preload="metadata" loop="loop">
-                    <source src="/ramadan_ux_design/static/description/song.mp3" type="audio/mpeg"/>
-                </audio>
-            </div>
-            
-            <!-- Music Player Panel with big vertical arrow -->
+
             <div class="music-player-panel" id="musicPlayerPanel">
+                <div class="panel-toggle" id="panelToggle">
+                    <i class="fa fa-chevron-left" id="toggleIcon" style="transition: transform 0.6s;"></i>
+                </div>
                 <div class="panel-content">
-                    <h4 class="song-title">🌙 رمضان 🌙</h4>
-                    <div class="player-controls">
+                    <h5 style="text-align:center; color:#d4af37; font-family:serif; margin-bottom:15px; letter-spacing: 1px;">🌙 RAMADAN KAREEM</h5>
+                    <div style="display:flex; align-items:center; gap:15px;">
                         <button class="play-pause-btn" id="playPauseBtn">
                             <i class="fa fa-play"></i>
                         </button>
                         <input type="range" class="seek-slider" id="seekSlider" value="0" step="0.1" min="0"/>
                     </div>
-                </div>
-                <div class="panel-toggle" id="panelToggle">
-                    <i class="fa fa-chevron-left"></i>
+                    <audio id="ramadanSong" loop="loop">
+                        <source src="/ramadan_ux_design/static/description/song.mp3" type="audio/mpeg"/>
+                    </audio>
                 </div>
             </div>
         </xpath>
+
         <xpath expr="//body" position="after">
             <script type="text/javascript">
-                <![CDATA[
-                (function() {
-                    function generateStars() {
-                        var starfield = document.querySelector('.starfield');
-                        if (!starfield) return;
-                        
-                        // Regular stars
-                        var numberOfStars = 80;
-                        for (var i = 0; i < numberOfStars; i++) {
-                            var star = document.createElement('div');
-                            star.className = 'star';
-                            if (i % 6 === 0) star.classList.add('large');
-                            star.style.left = Math.random() * 100 + '%';
-                            star.style.top = Math.random() * 100 + '%';
-                            star.style.animationDelay = Math.random() * 5 + 's, ' + Math.random() * 10 + 's';
-                            starfield.appendChild(star);
+                document.addEventListener('DOMContentLoaded', function() {
+                    const panel = document.getElementById('musicPlayerPanel');
+                    const toggle = document.getElementById('panelToggle');
+                    const icon = document.getElementById('toggleIcon');
+                    const audio = document.getElementById('ramadanSong');
+                    const btn = document.getElementById('playPauseBtn');
+                    const slider = document.getElementById('seekSlider');
+
+                    toggle.addEventListener('click', () => {
+                        panel.classList.toggle('open');
+                        icon.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    });
+
+                    btn.addEventListener('click', () => {
+                        if (audio.paused) {
+                            audio.play();
+                            btn.innerHTML = '<i class="fa fa-pause"></i>';
+                        } else {
+                            audio.pause();
+                            btn.innerHTML = '<i class="fa fa-play"></i>';
                         }
-                        
-                        // Golden crescent stars
-                        var crescentCount = 15;
-                        for (var i = 0; i < crescentCount; i++) {
-                            var crescent = document.createElement('div');
-                            crescent.className = 'star golden-crescent';
-                            crescent.style.left = Math.random() * 100 + '%';
-                            crescent.style.top = Math.random() * 100 + '%';
-                            crescent.style.animationDelay = Math.random() * 3 + 's';
-                            starfield.appendChild(crescent);
+                    });
+
+                    audio.addEventListener('timeupdate', () => {
+                        if (!isNaN(audio.duration)) {
+                            slider.max = audio.duration;
+                            slider.value = audio.currentTime;
                         }
-                    }
+                    });
 
-                    function initMusicPlayer() {
-                        var panel = document.getElementById('musicPlayerPanel');
-                        var toggle = document.getElementById('panelToggle');
-                        var audio = document.getElementById('ramadanSong');
-                        var playPauseBtn = document.getElementById('playPauseBtn');
-                        var seekSlider = document.getElementById('seekSlider');
-
-                        if (!panel || !toggle || !audio || !playPauseBtn || !seekSlider) return;
-
-                        toggle.addEventListener('click', function() {
-                            panel.classList.toggle('open');
-                            // Change arrow direction
-                            var icon = toggle.querySelector('i');
-                            if (panel.classList.contains('open')) {
-                                icon.className = 'fa fa-chevron-right';
-                            } else {
-                                icon.className = 'fa fa-chevron-left';
-                            }
-                        });
-
-                        playPauseBtn.addEventListener('click', function() {
-                            if (audio.paused) {
-                                audio.play().catch(e => console.log('Play failed:', e));
-                                playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
-                            } else {
-                                audio.pause();
-                                playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
-                            }
-                        });
-
-                        audio.addEventListener('loadedmetadata', function() {
-                            seekSlider.max = audio.duration;
-                        });
-
-                        audio.addEventListener('timeupdate', function() {
-                            if (!seekSlider.dragging) {
-                                seekSlider.value = audio.currentTime;
-                            }
-                        });
-
-                        seekSlider.addEventListener('input', function() {
-                            audio.currentTime = seekSlider.value;
-                        });
-
-                        seekSlider.addEventListener('mousedown', function() {
-                            seekSlider.dragging = true;
-                        });
-                        seekSlider.addEventListener('mouseup', function() {
-                            seekSlider.dragging = false;
-                        });
-
-                        audio.addEventListener('ended', function() {
-                            playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
-                            seekSlider.value = 0;
-                        });
-                    }
-
-                    // Run when DOM is ready
-                    if (document.readyState === 'loading') {
-                        document.addEventListener('DOMContentLoaded', function() {
-                            generateStars();
-                            initMusicPlayer();
-                        });
-                    } else {
-                        generateStars();
-                        initMusicPlayer();
-                    }
-                })();
-                ]]>
+                    slider.addEventListener('input', () => {
+                        audio.currentTime = slider.value;
+                    });
+                });
             </script>
         </xpath>
     </template>
