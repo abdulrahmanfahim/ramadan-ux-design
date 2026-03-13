@@ -23,58 +23,58 @@
                     border-radius: 50%;
                     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
                     opacity: 0;
-                    animation: shootAcross var(--duration) linear infinite;
+                    animation: fallDown linear infinite;
                 }
 
                 .star.small { width: 1px; height: 1px; }
                 .star.medium { width: 2px; height: 2px; box-shadow: 0 0 10px #ffaa00; }
                 .star.large { width: 3px; height: 3px; box-shadow: 0 0 12px #ffaa33; }
 
-                @keyframes shootAcross {
+                @keyframes fallDown {
                     0% {
                         opacity: 0;
-                        transform: translate(0, 0) scale(0.5);
+                        transform: translateY(-10vh) scale(0.5);
                     }
-                    10% {
+                    5% {
                         opacity: 1;
-                        transform: translate(5vw, 5vh) scale(1);
+                        transform: translateY(0) scale(1);
                     }
-                    90% {
+                    95% {
                         opacity: 1;
-                        transform: translate(90vw, 90vh) scale(1);
+                        transform: translateY(90vh) scale(1);
                     }
                     100% {
                         opacity: 0;
-                        transform: translate(100vw, 100vh) scale(0.5);
+                        transform: translateY(110vh) scale(0.5);
                     }
                 }
 
-                /* Additional shooting stars for more dynamic effect */
+                /* Shooting stars with longer trails */
                 .shooting-star {
                     position: absolute;
-                    width: 100px;
-                    height: 2px;
+                    width: 150px;
+                    height: 3px;
                     background: linear-gradient(90deg, transparent, #ffd700, #ffffff, #ffd700, transparent);
-                    filter: blur(1px);
+                    filter: blur(2px);
                     opacity: 0;
-                    animation: shootLinear var(--shoot-duration) linear infinite;
+                    animation: fallShooting linear infinite;
                     transform-origin: left center;
                 }
 
-                @keyframes shootLinear {
+                @keyframes fallShooting {
                     0% {
                         opacity: 0;
-                        transform: translate(-10vw, -10vh) rotate(25deg);
+                        transform: translateY(-10vh) rotate(5deg);
                     }
-                    20% {
+                    5% {
                         opacity: 1;
                     }
-                    80% {
+                    95% {
                         opacity: 1;
                     }
                     100% {
                         opacity: 0;
-                        transform: translate(110vw, 110vh) rotate(25deg);
+                        transform: translateY(110vh) rotate(5deg);
                     }
                 }
 
@@ -112,12 +112,12 @@
                     box-shadow: 0 0 8px #b8860b;
                 }
 
-                /* The lantern image - resized to fit */
+                /* The lantern image - connected directly to chain */
                 .fanous-image {
                     display: block;
                     max-width: 180px;
                     height: auto;
-                    margin-top: -2px;
+                    margin-top: 0px;  /* No gap - connects directly to chain */
                     filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
                     transition: filter 0.3s ease;
                 }
@@ -213,25 +213,25 @@
             <!-- Single Crescent -->
             <div class="crescent-moon"></div>
 
-            <!-- Four Lanterns with Chains -->
+            <!-- Four Lanterns with Chains - NO GAP -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:140px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <div class="fanous-container lamp-2">
                 <div class="fanous-chain" style="height:180px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <div class="fanous-container lamp-3">
                 <div class="fanous-chain" style="height:110px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <div class="fanous-container lamp-4">
                 <div class="fanous-chain" style="height:160px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <!-- Music Panel -->
@@ -263,8 +263,8 @@
                         // Clear any existing stars
                         starfield.innerHTML = '';
                         
-                        // Create 200 fast-moving stars (shooting across screen)
-                        for (let i = 0; i < 200; i++) {
+                        // Create 300 falling stars (slower, top to bottom)
+                        for (let i = 0; i < 300; i++) {
                             const star = document.createElement('div');
                             star.className = 'star';
                             
@@ -274,13 +274,15 @@
                             else if (r < 0.9) star.classList.add('medium');
                             else star.classList.add('large');
                             
-                            // Random starting position (off-screen or on-screen)
-                            star.style.left = (Math.random() * 30 - 15) + '%'; // -15% to 15% (can start off-screen)
-                            star.style.top = (Math.random() * 30 - 15) + '%';
+                            // Random horizontal position
+                            star.style.left = Math.random() * 100 + '%';
                             
-                            // Random animation duration (0.8s to 3s) - FAST!
-                            const duration = 0.8 + Math.random() * 2.2;
-                            star.style.setProperty('--duration', duration + 's');
+                            // Random vertical starting position (some start higher, some lower)
+                            star.style.top = (Math.random() * 20 - 10) + '%';
+                            
+                            // Slower animation duration (4s to 8s)
+                            const duration = 4 + Math.random() * 4;
+                            star.style.animation = `fallDown ${duration}s linear infinite`;
                             
                             // Random delay (0 to 5s)
                             star.style.animationDelay = (Math.random() * 5) + 's';
@@ -288,26 +290,26 @@
                             starfield.appendChild(star);
                         }
                         
-                        // Create 50 extra shooting stars (long trails)
+                        // Create 50 shooting stars with trails (slower, top to bottom)
                         for (let i = 0; i < 50; i++) {
                             const shooting = document.createElement('div');
                             shooting.className = 'shooting-star';
                             
-                            // Random position
-                            shooting.style.left = (Math.random() * 30 - 15) + '%';
-                            shooting.style.top = (Math.random() * 30 - 15) + '%';
+                            // Random horizontal position
+                            shooting.style.left = Math.random() * 100 + '%';
                             
-                            // Random animation duration (1s to 2.5s)
-                            const shootDuration = 1 + Math.random() * 1.5;
-                            shooting.style.setProperty('--shoot-duration', shootDuration + 's');
+                            // Start above the viewport
+                            shooting.style.top = '-10%';
                             
-                            // Random delay (0 to 4s)
-                            shooting.style.animationDelay = (Math.random() * 4) + 's';
+                            // Slower animation duration (5s to 9s)
+                            const shootDuration = 5 + Math.random() * 4;
+                            shooting.style.animation = `fallShooting ${shootDuration}s linear infinite`;
                             
-                            // Random rotation for varied directions
-                            const rotation = 15 + Math.random() * 30; // 15 to 45 degrees
-                            shooting.style.animation = `shootLinear ${shootDuration}s linear infinite`;
-                            shooting.style.animationDelay = (Math.random() * 4) + 's';
+                            // Random delay (0 to 8s)
+                            shooting.style.animationDelay = (Math.random() * 8) + 's';
+                            
+                            // Slight random rotation variation (0-15 degrees)
+                            const rotation = Math.random() * 15;
                             shooting.style.transform = `rotate(${rotation}deg)`;
                             
                             starfield.appendChild(shooting);
