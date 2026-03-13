@@ -45,7 +45,7 @@
                     box-shadow: -25px 15px 0 0 #fff9e6;
                     transform: rotate(-10deg);
                     filter: drop-shadow(0 0 15px #ffd700);
-                    z-index: 5;
+                    z-index: 15;
                     opacity: 0.9;
                 }
 
@@ -71,9 +71,9 @@
                 /* The lantern image - resized to fit */
                 .fanous-image {
                     display: block;
-                    max-width: 80px;        /* Adjust this value to control lantern size */
+                    max-width: 180px;
                     height: auto;
-                    margin-top: -2px;        /* Connect seamlessly with chain */
+                    margin-top: -2px;
                     filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
                     transition: filter 0.3s ease;
                 }
@@ -82,15 +82,15 @@
                     filter: drop-shadow(0 0 20px #ffaa00);
                 }
 
-                /* Gentle swinging for lanterns (different speeds) */
-                .lamp-1 { left: 5%; top: 15%; animation: gentleSwing 6s infinite ease-in-out; }
-                .lamp-2 { left: 18%; top: 30%; animation: gentleSwing 7s infinite ease-in-out; }
-                .lamp-3 { right: 10%; top: 20%; animation: gentleSwing 5.5s infinite ease-in-out; }
-                .lamp-4 { right: 22%; top: 35%; animation: gentleSwing 8s infinite ease-in-out; }
+                /* Gentle swinging for lanterns - FASTER speeds (2.5s to 4s) */
+                .lamp-1 { left: 2%; top: 10%; animation: gentleSwing 3.2s infinite ease-in-out; }
+                .lamp-2 { left: 15%; top: 25%; animation: gentleSwing 2.8s infinite ease-in-out; }
+                .lamp-3 { right: 5%; top: 15%; animation: gentleSwing 3.5s infinite ease-in-out; }
+                .lamp-4 { right: 20%; top: 30%; animation: gentleSwing 4s infinite ease-in-out; }
 
                 @keyframes gentleSwing {
-                    0%, 100% { transform: rotate(-1.5deg); }
-                    50% { transform: rotate(1.5deg); }
+                    0%, 100% { transform: rotate(-1.8deg); }
+                    50% { transform: rotate(1.8deg); }
                 }
 
                 /* ===== MUSIC PLAYER PANEL ===== */
@@ -169,7 +169,7 @@
             <!-- Single Crescent -->
             <div class="crescent-moon"></div>
 
-            <!-- Four Lanterns with Chains (using actual image fanoos.png) -->
+            <!-- Four Lanterns with Chains -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:140px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
