@@ -68,12 +68,12 @@
                     box-shadow: 0 0 8px #b8860b;
                 }
 
-                /* The lantern image */
+                /* The lantern image - resized to fit */
                 .fanous-image {
                     display: block;
-                    width: 100px;  /* Adjust based on your image's natural size */
+                    max-width: 80px;        /* Adjust this value to control lantern size */
                     height: auto;
-                    margin-top: -2px;  /* Connect seamlessly with chain */
+                    margin-top: -2px;        /* Connect seamlessly with chain */
                     filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
                     transition: filter 0.3s ease;
                 }
@@ -169,25 +169,25 @@
             <!-- Single Crescent -->
             <div class="crescent-moon"></div>
 
-            <!-- Four Lanterns with Chains -->
+            <!-- Four Lanterns with Chains (using actual image fanoos.png) -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:140px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanous.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-2">
                 <div class="fanous-chain" style="height:180px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanous.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-3">
                 <div class="fanous-chain" style="height:110px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanous.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-4">
                 <div class="fanous-chain" style="height:160px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanous.png" alt="Ramadan Lantern"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <!-- Music Panel -->
