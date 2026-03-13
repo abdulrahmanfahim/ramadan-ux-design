@@ -65,24 +65,15 @@
                     pointer-events: none;
                 }
 
-                /* Mobile adjustments for crescent - MUCH LOWER POSITION */
+                /* Mobile adjustments for crescent */
                 @media (max-width: 768px) {
                     .crescent-moon {
-                        top: 180px;  /* Increased from 100px to 180px - well below navbar */
-                        left: 3%;
+                        top: 100px;
+                        left: 5%;
                         width: 60px;
                         height: 60px;
                         box-shadow: -8px 5px 0 0 #fff9e6;
                         opacity: 0.6;
-                    }
-                }
-
-                /* Small phones adjustment */
-                @media (max-width: 480px) {
-                    .crescent-moon {
-                        top: 200px;  /* Even lower */
-                        width: 50px;
-                        height: 50px;
                     }
                 }
 
@@ -117,28 +108,32 @@
                     pointer-events: none;
                 }
 
-                /* Desktop lamp positions */
-                .lamp-1 { left: 3%; top: 12%; animation: gentleSwing 3.5s infinite ease-in-out; }
+                /* Desktop lamp positions - FIXED */
+                .lamp-1 { 
+                    left: 3%; 
+                    top: 180px;  /* Increased from 12% to fixed 180px to clear crescent moon */
+                    animation: gentleSwing 3.5s infinite ease-in-out; 
+                }
                 .lamp-2 { left: 18%; top: 28%; animation: gentleSwing 4s infinite ease-in-out; }
                 .lamp-3 { right: 5%; top: 18%; animation: gentleSwing 3.8s infinite ease-in-out; }
                 .lamp-4 { right: 18%; top: 32%; animation: gentleSwing 4.2s infinite ease-in-out; }
 
-                /* Mobile: only 2 lanterns, smaller, repositioned LOWER */
+                /* Mobile: only 2 lanterns, smaller, repositioned */
                 @media (max-width: 768px) {
                     .lamp-1, .lamp-4 { display: flex; }
                     .lamp-2, .lamp-3 { display: none; }
                     
                     .lamp-1 { 
-                        left: 2%; 
-                        top: 280px;  /* Fixed pixel value to ensure it's below navbar */
+                        left: 5%; 
+                        top: 180px;  /* Increased from 150px to 180px - away from moon */
                     }
                     .lamp-4 { 
-                        right: 2%; 
-                        top: 380px;  /* Even lower to avoid overlapping with music panel */
+                        right: 5%; 
+                        top: 300px;
                     }
                     
                     .fanous-chain {
-                        height: 50px;
+                        height: 40px;  /* MUCH SHORTER chains */
                         width: 2px;
                     }
                     
@@ -147,10 +142,14 @@
                     }
                 }
 
-                /* Small phones - even more spacing */
+                /* Small phones */
                 @media (max-width: 480px) {
-                    .lamp-1 { top: 260px; }
-                    .lamp-4 { top: 360px; }
+                    .lamp-1 { top: 160px; }
+                    .lamp-4 { top: 280px; }
+                    
+                    .fanous-chain {
+                        height: 35px;  /* Even shorter */
+                    }
                     
                     .fanous-image {
                         max-width: 45px;
@@ -162,7 +161,7 @@
                     50% { transform: rotate(1.5deg); }
                 }
 
-                /* ===== MUSIC PLAYER PANEL - LOWER ON MOBILE ===== */
+                /* ===== MUSIC PLAYER PANEL - FIXED VISIBILITY ===== */
                 .music-player-panel {
                     position: fixed;
                     top: 50%;
@@ -204,22 +203,31 @@
                     pointer-events: auto;
                 }
 
-                /* Mobile music panel adjustments - LOWER POSITION */
+                /* Mobile music panel - FIXED VISIBILITY */
                 @media (max-width: 768px) {
                     .music-player-panel {
-                        right: -240px;
-                        top: 60%;  /* Moved from 50% to 60% of viewport height */
+                        right: -200px;  /* Adjusted for smaller screen */
+                        top: 55%;
+                        display: flex !important;  /* Force display */
+                        opacity: 1 !important;  /* Ensure visible */
+                        visibility: visible !important;
+                    }
+                    
+                    .music-player-panel.open { 
+                        right: 0; 
                     }
                     
                     .panel-content {
-                        width: 220px;  /* Slightly narrower */
+                        width: 200px;
                         padding: 12px;
+                        display: block !important;
                     }
                     
                     .panel-toggle {
-                        width: 32px;
+                        width: 35px;
                         height: 90px;
-                        font-size: 18px;
+                        font-size: 20px;
+                        display: flex !important;
                     }
                     
                     .play-pause-btn {
@@ -227,25 +235,32 @@
                         height: 36px;
                     }
                     
+                    .seek-slider {
+                        height: 4px;
+                    }
+                    
                     h5 {
                         font-size: 14px !important;
-                        margin-bottom: 10px !important;
+                        margin-bottom: 8px !important;
                     }
                 }
 
-                /* Small phones - even lower */
+                /* Small phones - ensure visibility */
                 @media (max-width: 480px) {
                     .music-player-panel {
-                        top: 65%;  /* 65% of viewport height */
+                        right: -180px;
+                        top: 58%;
                     }
                     
                     .panel-content {
-                        width: 200px;
+                        width: 180px;
                         padding: 10px;
                     }
                     
                     .panel-toggle {
+                        width: 32px;
                         height: 80px;
+                        font-size: 18px;
                     }
                 }
 
@@ -271,7 +286,7 @@
                     pointer-events: auto;
                 }
 
-                /* Transparent content area - normal flow */
+                /* Transparent content area */
                 #wrap {
                     position: relative;
                     z-index: 10;
@@ -313,44 +328,39 @@
                     pointer-events: auto !important;
                     z-index: 1000 !important;
                 }
-
-                .o_website_apps, .o_website_sale, .o_blog, .o_portal, .o_forum {
-                    position: relative;
-                    z-index: 15;
-                }
                 ]]>
             </style>
         </xpath>
 
         <xpath expr="//body" position="inside">
-            <!-- Starry Sky - Lowest layer -->
+            <!-- Starry Sky -->
             <div class="starfield" id="starfield"></div>
 
-            <!-- Single Crescent - Positioned lower on mobile -->
+            <!-- Single Crescent -->
             <div class="crescent-moon"></div>
 
-            <!-- Lanterns - Positioned lower on mobile -->
+            <!-- Lanterns -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:120px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-2">
                 <div class="fanous-chain" style="height:150px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-3">
                 <div class="fanous-chain" style="height:100px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-4">
                 <div class="fanous-chain" style="height:140px;"></div>
-                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
+                <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
-            <!-- Music Panel - Lower on mobile -->
+            <!-- Music Panel -->
             <div class="music-player-panel" id="musicPlayerPanel">
                 <div class="panel-toggle" id="panelToggle">
                     <span id="toggleIcon">♬</span>
@@ -374,14 +384,11 @@
             <script type="text/javascript">
                 <![CDATA[
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Stars generation - responsive count
                     const starfield = document.getElementById('starfield');
                     const isMobile = window.innerWidth <= 768;
                     
                     if (starfield) {
                         starfield.innerHTML = '';
-                        
-                        // Fewer stars on mobile for performance
                         const starCount = isMobile ? 150 : 300;
                         
                         for (let i = 0; i < starCount; i++) {
@@ -396,17 +403,15 @@
                             star.style.left = Math.random() * 100 + '%';
                             star.style.top = (Math.random() * 20 - 10) + '%';
                             
-                            // Slightly faster on mobile for performance/look
                             const duration = isMobile ? 3 + Math.random() * 3 : 4 + Math.random() * 4;
                             star.style.animation = `fallDown ${duration}s linear infinite`;
-                            
                             star.style.animationDelay = (Math.random() * 5) + 's';
                             
                             starfield.appendChild(star);
                         }
                     }
 
-                    // Music player with autoplay after first interaction
+                    // Music player
                     const panel = document.getElementById('musicPlayerPanel');
                     const toggle = document.getElementById('panelToggle');
                     const audio = document.getElementById('ramadanSong');
@@ -415,24 +420,18 @@
                     
                     let userInteracted = false;
                     
-                    // Function to attempt autoplay after user interaction
                     function enableAutoplay() {
                         if (!userInteracted) {
                             userInteracted = true;
-                            
-                            // Try to play if panel is open or was previously playing
                             if (panel.classList.contains('open')) {
                                 audio.play().catch(e => console.log("Autoplay prevented:", e));
                             }
-                            
-                            // Remove listeners after first interaction
                             document.removeEventListener('click', enableAutoplay);
                             document.removeEventListener('touchstart', enableAutoplay);
                             document.removeEventListener('scroll', enableAutoplay);
                         }
                     }
                     
-                    // Listen for first user interaction
                     document.addEventListener('click', enableAutoplay, { once: true });
                     document.addEventListener('touchstart', enableAutoplay, { once: true });
                     document.addEventListener('scroll', enableAutoplay, { once: true });
@@ -441,7 +440,6 @@
                         e.stopPropagation();
                         panel.classList.toggle('open');
                         
-                        // If panel opens and user has interacted, try to play
                         if (panel.classList.contains('open') && userInteracted && audio.paused) {
                             audio.play().catch(e => console.log("Play failed:", e));
                             btn.innerHTML = '<i class="fa fa-pause"></i>';
@@ -470,20 +468,9 @@
                         audio.currentTime = slider.value;
                     });
                     
-                    // Handle page navigation - maintain play state if possible
                     window.addEventListener('beforeunload', function() {
-                        if (!audio.paused) {
-                            sessionStorage.setItem('ramadanMusicPlaying', 'true');
-                        } else {
-                            sessionStorage.setItem('ramadanMusicPlaying', 'false');
-                        }
+                        sessionStorage.setItem('ramadanMusicPlaying', audio.paused ? 'false' : 'true');
                     });
-                    
-                    // Check if music was playing before navigation
-                    if (sessionStorage.getItem('ramadanMusicPlaying') === 'true') {
-                        // Will play after user interaction via the enableAutoplay function
-                        console.log("Music was playing, will resume after interaction");
-                    }
                 });
                 ]]>
             </script>
