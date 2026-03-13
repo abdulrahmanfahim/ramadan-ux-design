@@ -12,7 +12,7 @@
                     width: 100%;
                     height: 100%;
                     pointer-events: none;
-                    z-index: -1;  /* Behind everything */
+                    z-index: -1;
                     background: radial-gradient(ellipse at 30% 40%, #0a2e28 0%, #020d0b 100%);
                     overflow: hidden;
                 }
@@ -60,20 +60,29 @@
                     box-shadow: -20px 12px 0 0 #fff9e6;
                     transform: rotate(-10deg);
                     filter: drop-shadow(0 0 15px #ffd700);
-                    z-index: 0;  /* Behind all content */
+                    z-index: 0;
                     opacity: 0.8;
                     pointer-events: none;
                 }
 
-                /* Mobile adjustments for crescent */
+                /* Mobile adjustments for crescent - MUCH LOWER POSITION */
                 @media (max-width: 768px) {
                     .crescent-moon {
-                        top: 20px;
+                        top: 180px;  /* Increased from 100px to 180px - well below navbar */
                         left: 3%;
-                        width: 80px;
-                        height: 80px;
-                        box-shadow: -12px 8px 0 0 #fff9e6;
+                        width: 60px;
+                        height: 60px;
+                        box-shadow: -8px 5px 0 0 #fff9e6;
                         opacity: 0.6;
+                    }
+                }
+
+                /* Small phones adjustment */
+                @media (max-width: 480px) {
+                    .crescent-moon {
+                        top: 200px;  /* Even lower */
+                        width: 50px;
+                        height: 50px;
                     }
                 }
 
@@ -84,9 +93,9 @@
                     flex-direction: column;
                     align-items: center;
                     transform-origin: top center;
-                    z-index: 1;  /* Above stars, below content */
+                    z-index: 1;
                     filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
-                    pointer-events: none;  /* Allow clicks to pass through */
+                    pointer-events: none;
                 }
 
                 /* Chain - thin bronze links */
@@ -105,7 +114,7 @@
                     margin-top: 0px;
                     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
                     transition: filter 0.3s ease;
-                    pointer-events: none;  /* Allow clicks to pass through */
+                    pointer-events: none;
                 }
 
                 /* Desktop lamp positions */
@@ -114,21 +123,37 @@
                 .lamp-3 { right: 5%; top: 18%; animation: gentleSwing 3.8s infinite ease-in-out; }
                 .lamp-4 { right: 18%; top: 32%; animation: gentleSwing 4.2s infinite ease-in-out; }
 
-                /* Mobile: only 2 lanterns, smaller, repositioned */
+                /* Mobile: only 2 lanterns, smaller, repositioned LOWER */
                 @media (max-width: 768px) {
                     .lamp-1, .lamp-4 { display: flex; }
                     .lamp-2, .lamp-3 { display: none; }
                     
-                    .lamp-1 { left: 2%; top: 15%; }
-                    .lamp-4 { right: 2%; top: 25%; }
+                    .lamp-1 { 
+                        left: 2%; 
+                        top: 280px;  /* Fixed pixel value to ensure it's below navbar */
+                    }
+                    .lamp-4 { 
+                        right: 2%; 
+                        top: 380px;  /* Even lower to avoid overlapping with music panel */
+                    }
                     
                     .fanous-chain {
-                        height: 70px;
+                        height: 50px;
                         width: 2px;
                     }
                     
                     .fanous-image {
-                        max-width: 70px;
+                        max-width: 55px;
+                    }
+                }
+
+                /* Small phones - even more spacing */
+                @media (max-width: 480px) {
+                    .lamp-1 { top: 260px; }
+                    .lamp-4 { top: 360px; }
+                    
+                    .fanous-image {
+                        max-width: 45px;
                     }
                 }
 
@@ -137,7 +162,7 @@
                     50% { transform: rotate(1.5deg); }
                 }
 
-                /* ===== MUSIC PLAYER PANEL - SIDEBAR UI ===== */
+                /* ===== MUSIC PLAYER PANEL - LOWER ON MOBILE ===== */
                 .music-player-panel {
                     position: fixed;
                     top: 50%;
@@ -145,7 +170,7 @@
                     transform: translateY(-50%);
                     display: flex;
                     align-items: center;
-                    z-index: 1000;  /* Higher than most UI, but still behind modals */
+                    z-index: 1000;
                     transition: right 0.6s ease;
                 }
                 .music-player-panel.open { right: 0; }
@@ -165,7 +190,7 @@
                     border-right: none;
                     font-size: 22px;
                     z-index: 1001;
-                    pointer-events: auto;  /* This should be clickable */
+                    pointer-events: auto;
                 }
 
                 .panel-content {
@@ -176,29 +201,51 @@
                     border-left: 2px solid #d4af37;
                     box-shadow: -8px 0 25px rgba(0,0,0,0.5);
                     z-index: 1000;
-                    pointer-events: auto;  /* This should be clickable */
+                    pointer-events: auto;
                 }
 
-                /* Mobile music panel adjustments */
+                /* Mobile music panel adjustments - LOWER POSITION */
                 @media (max-width: 768px) {
                     .music-player-panel {
                         right: -240px;
+                        top: 60%;  /* Moved from 50% to 60% of viewport height */
                     }
                     
                     .panel-content {
-                        width: 240px;
-                        padding: 15px;
+                        width: 220px;  /* Slightly narrower */
+                        padding: 12px;
                     }
                     
                     .panel-toggle {
-                        width: 35px;
-                        height: 100px;
-                        font-size: 20px;
+                        width: 32px;
+                        height: 90px;
+                        font-size: 18px;
                     }
                     
                     .play-pause-btn {
-                        width: 40px;
-                        height: 40px;
+                        width: 36px;
+                        height: 36px;
+                    }
+                    
+                    h5 {
+                        font-size: 14px !important;
+                        margin-bottom: 10px !important;
+                    }
+                }
+
+                /* Small phones - even lower */
+                @media (max-width: 480px) {
+                    .music-player-panel {
+                        top: 65%;  /* 65% of viewport height */
+                    }
+                    
+                    .panel-content {
+                        width: 200px;
+                        padding: 10px;
+                    }
+                    
+                    .panel-toggle {
+                        height: 80px;
                     }
                 }
 
@@ -227,7 +274,7 @@
                 /* Transparent content area - normal flow */
                 #wrap {
                     position: relative;
-                    z-index: 10;  /* Above decorations */
+                    z-index: 10;
                     background: transparent !important;
                     border-radius: 20px;
                     margin: 15px;
@@ -237,18 +284,18 @@
                 /* Ensure navbar and hamburger menu stay on top */
                 .navbar, header, .o_main_navbar, .o_menu_sections, .o_menu_toggle {
                     position: relative;
-                    z-index: 100 !important;  /* Above decorations, below music panel */
+                    z-index: 100 !important;
                 }
 
                 /* Ensure form fields and interactive elements are above decorations */
                 input, textarea, select, .btn, a, .o_dropdown, .modal, .dropdown-menu {
                     position: relative;
-                    z-index: 50;  /* Above decorations */
+                    z-index: 50;
                 }
 
                 /* Make sure modals and popups are above everything */
                 .modal, .modal-content, .popover, .tooltip {
-                    z-index: 2000 !important;  /* Above music panel */
+                    z-index: 2000 !important;
                 }
 
                 /* Mobile navbar fixes */
@@ -257,19 +304,16 @@
                         z-index: 101 !important;
                     }
                     
-                    /* Ensure mobile menu dropdown appears above everything */
                     .o_menu_sections {
                         z-index: 102 !important;
                     }
                 }
 
-                /* Make sure dropdowns are clickable */
                 .dropdown-menu, .o_dropdown_menu {
                     pointer-events: auto !important;
                     z-index: 1000 !important;
                 }
 
-                /* Ensure all Odoo content is above decorations */
                 .o_website_apps, .o_website_sale, .o_blog, .o_portal, .o_forum {
                     position: relative;
                     z-index: 15;
@@ -282,10 +326,10 @@
             <!-- Starry Sky - Lowest layer -->
             <div class="starfield" id="starfield"></div>
 
-            <!-- Single Crescent - Low layer -->
+            <!-- Single Crescent - Positioned lower on mobile -->
             <div class="crescent-moon"></div>
 
-            <!-- Lanterns - Low layer, non-interactive -->
+            <!-- Lanterns - Positioned lower on mobile -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:120px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
@@ -306,7 +350,7 @@
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
-            <!-- Music Panel - High layer, interactive -->
+            <!-- Music Panel - Lower on mobile -->
             <div class="music-player-panel" id="musicPlayerPanel">
                 <div class="panel-toggle" id="panelToggle">
                     <span id="toggleIcon">♬</span>
