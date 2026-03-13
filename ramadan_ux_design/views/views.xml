@@ -58,6 +58,7 @@
                     transform-origin: top center;
                     z-index: 10;
                     filter: drop-shadow(0 10px 8px rgba(0,0,0,0.6));
+                    animation: gentleSwing 5s infinite ease-in-out;
                 }
 
                 /* Chain - thin bronze links */
@@ -101,7 +102,7 @@
                     overflow: hidden;
                 }
 
-                /* Intricate ironwork (filigree) - using multiple layers */
+                /* Intricate ironwork (filigree) */
                 .fanous-filigree {
                     position: absolute;
                     top: 5%;
@@ -115,7 +116,7 @@
                     pointer-events: none;
                 }
 
-                /* Pointed arch windows (six sides) */
+                /* Pointed arch windows */
                 .fanous-window {
                     position: absolute;
                     background: rgba(255, 200, 100, 0.2);
@@ -162,7 +163,7 @@
                     box-shadow: 0 5px 8px #00000066;
                 }
 
-                /* Tiny golden droplets hanging from finial */
+                /* Tiny golden droplets */
                 .fanous-droplet {
                     position: absolute;
                     bottom: -20px;
@@ -194,14 +195,15 @@
                     100% { transform: translateX(-50%) rotate(2deg); }
                 }
 
-                /* Lamp positions with varying chain lengths */
-                .lamp-1 { left: 8%; top: 12%; animation: gentleSwing 6s infinite ease-in-out; }
-                .lamp-2 { left: 20%; top: 28%; animation: gentleSwing 7s infinite ease-in-out; }
-                .lamp-3 { right: 10%; top: 18%; animation: gentleSwing 5.5s infinite ease-in-out; }
+                /* Gentle swinging for lanterns (different speeds) */
+                .lamp-1 { left: 5%; top: 15%; animation: gentleSwing 6s infinite ease-in-out; }
+                .lamp-2 { left: 18%; top: 30%; animation: gentleSwing 7s infinite ease-in-out; }
+                .lamp-3 { right: 10%; top: 20%; animation: gentleSwing 5.5s infinite ease-in-out; }
+                .lamp-4 { right: 22%; top: 35%; animation: gentleSwing 8s infinite ease-in-out; }
 
                 @keyframes gentleSwing {
-                    0%, 100% { transform: rotate(-1deg); }
-                    50% { transform: rotate(1deg); }
+                    0%, 100% { transform: rotate(-1.5deg); }
+                    50% { transform: rotate(1.5deg); }
                 }
 
                 /* ===== MUSIC PLAYER PANEL ===== */
@@ -230,6 +232,10 @@
                     box-shadow: -5px 0 15px rgba(0,0,0,0.5);
                     border: 1px solid #ffcc33;
                     border-right: none;
+                    font-size: 24px; /* for music note */
+                }
+                .panel-toggle:hover {
+                    background: #ffcc33;
                 }
 
                 .panel-content {
@@ -256,7 +262,7 @@
 
                 .seek-slider { flex: 1; accent-color: #d4af37; cursor: pointer; }
 
-                /* Content area should be transparent to show starfield */
+                /* Transparent content area */
                 #wrap {
                     position: relative;
                     z-index: 15;
@@ -264,7 +270,6 @@
                     border-radius: 20px;
                     margin: 20px;
                     padding: 20px;
-                    backdrop-filter: none;
                 }
                 ]]>
             </style>
@@ -277,7 +282,7 @@
             <!-- Single Crescent -->
             <div class="crescent-moon"></div>
 
-            <!-- Three Ornate Lanterns -->
+            <!-- Four Ornate Lanterns -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:140px;"></div>
                 <div class="fanous">
@@ -335,10 +340,29 @@
                 </div>
             </div>
 
+            <div class="fanous-container lamp-4">
+                <div class="fanous-chain" style="height:160px;"></div>
+                <div class="fanous">
+                    <div class="fanous-dome"></div>
+                    <div class="fanous-body">
+                        <div class="fanous-filigree"></div>
+                        <div class="fanous-window window-1"></div>
+                        <div class="fanous-window window-2"></div>
+                        <div class="fanous-window window-3"></div>
+                        <div class="fanous-window window-4"></div>
+                        <div class="fanous-window window-5"></div>
+                        <div class="fanous-window window-6"></div>
+                        <div class="fanous-glow"></div>
+                    </div>
+                    <div class="fanous-finial"></div>
+                    <div class="fanous-droplet"></div>
+                </div>
+            </div>
+
             <!-- Music Panel -->
             <div class="music-player-panel" id="musicPlayerPanel">
                 <div class="panel-toggle" id="panelToggle">
-                    <i class="fa fa-chevron-left" id="toggleIcon"></i>
+                    <span id="toggleIcon">♬</span> <!-- Music note icon -->
                 </div>
                 <div class="panel-content">
                     <h5 style="text-align:center; color:#d4af37; margin-bottom:15px;">🌙 RAMADAN KAREEM</h5>
@@ -359,10 +383,10 @@
             <script type="text/javascript">
                 <![CDATA[
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Stars generation (reduced count for performance)
+                    // Stars generation (300 stars)
                     const starfield = document.getElementById('starfield');
                     if (starfield) {
-                        for (let i = 0; i < 150; i++) {
+                        for (let i = 0; i < 300; i++) {
                             const star = document.createElement('div');
                             star.className = 'star';
                             const r = Math.random();
@@ -386,7 +410,7 @@
 
                     toggle.addEventListener('click', () => {
                         panel.classList.toggle('open');
-                        icon.style.transform = panel.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        // No rotation needed for music note, but we could change symbol if desired
                     });
 
                     btn.addEventListener('click', () => {
