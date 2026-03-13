@@ -12,7 +12,7 @@
                     width: 100%;
                     height: 100%;
                     pointer-events: none;
-                    z-index: -1;
+                    z-index: 0;
                     background: radial-gradient(ellipse at 30% 40%, #0a2e28 0%, #020d0b 100%);
                     overflow: hidden;
                 }
@@ -49,158 +49,210 @@
                     }
                 }
 
-                /* Shooting stars with longer trails */
-                .shooting-star {
-                    position: absolute;
-                    width: 150px;
-                    height: 3px;
-                    background: linear-gradient(90deg, transparent, #ffd700, #ffffff, #ffd700, transparent);
-                    filter: blur(2px);
-                    opacity: 0;
-                    animation: fallShooting linear infinite;
-                    transform-origin: left center;
-                }
-
-                @keyframes fallShooting {
-                    0% {
-                        opacity: 0;
-                        transform: translateY(-10vh) rotate(5deg);
-                    }
-                    5% {
-                        opacity: 1;
-                    }
-                    95% {
-                        opacity: 1;
-                    }
-                    100% {
-                        opacity: 0;
-                        transform: translateY(110vh) rotate(5deg);
-                    }
-                }
-
-                /* ===== SINGLE CRESCENT MOON ===== */
+                /* ===== SINGLE CRESCENT MOON (lower z-index) ===== */
                 .crescent-moon {
                     position: absolute;
                     top: 60px;
-                    left: 10%;
-                    width: 140px;
-                    height: 140px;
+                    left: 5%;
+                    width: 120px;
+                    height: 120px;
                     border-radius: 50%;
-                    box-shadow: -25px 15px 0 0 #fff9e6;
+                    box-shadow: -20px 12px 0 0 #fff9e6;
                     transform: rotate(-10deg);
                     filter: drop-shadow(0 0 15px #ffd700);
-                    z-index: 15;
-                    opacity: 0.9;
+                    z-index: 5;
+                    opacity: 0.8;
+                    pointer-events: none;
                 }
 
-                /* ===== FANOUS CONTAINER (with chain) ===== */
+                /* Mobile adjustments for crescent */
+                @media (max-width: 768px) {
+                    .crescent-moon {
+                        top: 20px;
+                        left: 3%;
+                        width: 80px;
+                        height: 80px;
+                        box-shadow: -12px 8px 0 0 #fff9e6;
+                        opacity: 0.6;
+                    }
+                }
+
+                /* ===== FANOUS CONTAINER (with chain) - lower z-index ===== */
                 .fanous-container {
                     position: absolute;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     transform-origin: top center;
-                    z-index: 10;
-                    filter: drop-shadow(0 10px 8px rgba(0,0,0,0.6));
+                    z-index: 4;
+                    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
+                    pointer-events: none;
                 }
 
                 /* Chain - thin bronze links */
                 .fanous-chain {
-                    width: 4px;
-                    height: 120px;
-                    background: repeating-linear-gradient(45deg, #b8860b 0px 4px, #8b6913 4px 8px);
-                    box-shadow: 0 0 8px #b8860b;
+                    width: 3px;
+                    height: 100px;
+                    background: repeating-linear-gradient(45deg, #b8860b 0px 3px, #8b6913 3px 6px);
+                    box-shadow: 0 0 5px #b8860b;
                 }
 
                 /* The lantern image - connected directly to chain */
                 .fanous-image {
                     display: block;
-                    max-width: 180px;
+                    max-width: 120px;
                     height: auto;
-                    margin-top: 0px;  /* No gap - connects directly to chain */
-                    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+                    margin-top: 0px;
+                    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
                     transition: filter 0.3s ease;
+                    pointer-events: none;
                 }
 
-                .fanous-image:hover {
-                    filter: drop-shadow(0 0 20px #ffaa00);
-                }
+                /* Desktop lamp positions */
+                .lamp-1 { left: 3%; top: 12%; animation: gentleSwing 3.5s infinite ease-in-out; }
+                .lamp-2 { left: 18%; top: 28%; animation: gentleSwing 4s infinite ease-in-out; }
+                .lamp-3 { right: 5%; top: 18%; animation: gentleSwing 3.8s infinite ease-in-out; }
+                .lamp-4 { right: 18%; top: 32%; animation: gentleSwing 4.2s infinite ease-in-out; }
 
-                /* Gentle swinging for lanterns */
-                .lamp-1 { left: 2%; top: 10%; animation: gentleSwing 3.2s infinite ease-in-out; }
-                .lamp-2 { left: 15%; top: 25%; animation: gentleSwing 2.8s infinite ease-in-out; }
-                .lamp-3 { right: 5%; top: 15%; animation: gentleSwing 3.5s infinite ease-in-out; }
-                .lamp-4 { right: 20%; top: 30%; animation: gentleSwing 4s infinite ease-in-out; }
+                /* Mobile: only 2 lanterns, smaller, repositioned */
+                @media (max-width: 768px) {
+                    .lamp-1, .lamp-4 { display: flex; }
+                    .lamp-2, .lamp-3 { display: none; }
+                    
+                    .lamp-1 { left: 2%; top: 15%; }
+                    .lamp-4 { right: 2%; top: 25%; }
+                    
+                    .fanous-chain {
+                        height: 70px;
+                        width: 2px;
+                    }
+                    
+                    .fanous-image {
+                        max-width: 70px;
+                    }
+                }
 
                 @keyframes gentleSwing {
-                    0%, 100% { transform: rotate(-1.8deg); }
-                    50% { transform: rotate(1.8deg); }
+                    0%, 100% { transform: rotate(-1.5deg); }
+                    50% { transform: rotate(1.5deg); }
                 }
 
-                /* ===== MUSIC PLAYER PANEL ===== */
+                /* ===== MUSIC PLAYER PANEL (lower z-index) ===== */
                 .music-player-panel {
                     position: fixed;
                     top: 50%;
-                    right: -310px;
+                    right: -280px;
                     transform: translateY(-50%);
                     display: flex;
                     align-items: center;
-                    z-index: 2000;
+                    z-index: 100;
                     transition: right 0.6s ease;
                 }
                 .music-player-panel.open { right: 0; }
 
                 .panel-toggle {
-                    width: 45px;
-                    height: 140px;
+                    width: 40px;
+                    height: 120px;
                     background: linear-gradient(135deg, #d4af37, #b8860b);
                     color: #020d0b;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
-                    border-radius: 20px 0 0 20px;
-                    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                    border-radius: 15px 0 0 15px;
+                    box-shadow: -3px 0 10px rgba(0,0,0,0.4);
                     border: 1px solid #ffcc33;
                     border-right: none;
-                    font-size: 24px;
-                }
-                .panel-toggle:hover {
-                    background: #ffcc33;
+                    font-size: 22px;
+                    z-index: 101;
                 }
 
                 .panel-content {
-                    width: 310px;
+                    width: 280px;
                     background: rgba(8, 20, 15, 0.95);
-                    backdrop-filter: blur(20px);
-                    padding: 25px;
-                    border-left: 3px solid #d4af37;
-                    box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+                    backdrop-filter: blur(10px);
+                    padding: 20px;
+                    border-left: 2px solid #d4af37;
+                    box-shadow: -8px 0 25px rgba(0,0,0,0.5);
+                    z-index: 100;
+                }
+
+                /* Mobile music panel adjustments */
+                @media (max-width: 768px) {
+                    .music-player-panel {
+                        right: -240px;
+                    }
+                    
+                    .panel-content {
+                        width: 240px;
+                        padding: 15px;
+                    }
+                    
+                    .panel-toggle {
+                        width: 35px;
+                        height: 100px;
+                        font-size: 20px;
+                    }
+                    
+                    .play-pause-btn {
+                        width: 40px;
+                        height: 40px;
+                    }
                 }
 
                 .play-pause-btn {
                     background: #d4af37;
                     border: none;
                     border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
+                    width: 45px;
+                    height: 45px;
                     cursor: pointer;
                     color: #020d0b;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
                     transition: transform 0.2s ease;
+                    z-index: 102;
                 }
                 .play-pause-btn:hover { transform: scale(1.1); background: #ffcc33; }
 
-                .seek-slider { flex: 1; accent-color: #d4af37; cursor: pointer; }
+                .seek-slider { 
+                    flex: 1; 
+                    accent-color: #d4af37; 
+                    cursor: pointer; 
+                    height: 5px;
+                }
 
-                /* Transparent content area */
+                /* Transparent content area - ensure Odoo UI stays above */
                 #wrap {
                     position: relative;
-                    z-index: 15;
+                    z-index: 10;
                     background: transparent !important;
                     border-radius: 20px;
-                    margin: 20px;
-                    padding: 20px;
+                    margin: 15px;
+                    padding: 15px;
+                }
+
+                /* Ensure navbar and hamburger menu stay on top */
+                .navbar, header, .o_main_navbar, .o_menu_sections, .o_menu_toggle {
+                    position: relative;
+                    z-index: 200 !important;
+                }
+
+                /* Ensure form fields and interactive elements are above decorations */
+                input, textarea, select, button:not(.play-pause-btn), .btn, a, .o_dropdown, .modal {
+                    position: relative;
+                    z-index: 150;
+                }
+
+                /* Mobile navbar fixes */
+                @media (max-width: 768px) {
+                    .navbar-brand, .o_menu_toggle {
+                        z-index: 250 !important;
+                    }
+                    
+                    /* Ensure mobile menu dropdown appears above everything */
+                    .o_menu_sections {
+                        z-index: 300 !important;
+                    }
                 }
                 ]]>
             </style>
@@ -210,27 +262,27 @@
             <!-- Starry Sky -->
             <div class="starfield" id="starfield"></div>
 
-            <!-- Single Crescent -->
+            <!-- Single Crescent (lower z-index) -->
             <div class="crescent-moon"></div>
 
-            <!-- Four Lanterns with Chains - NO GAP -->
+            <!-- Lanterns - Desktop shows 4, mobile shows 2 -->
             <div class="fanous-container lamp-1">
-                <div class="fanous-chain" style="height:140px;"></div>
+                <div class="fanous-chain" style="height:120px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <div class="fanous-container lamp-2">
-                <div class="fanous-chain" style="height:180px;"></div>
+                <div class="fanous-chain" style="height:150px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <div class="fanous-container lamp-3">
-                <div class="fanous-chain" style="height:110px;"></div>
+                <div class="fanous-chain" style="height:100px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
             <div class="fanous-container lamp-4">
-                <div class="fanous-chain" style="height:160px;"></div>
+                <div class="fanous-chain" style="height:140px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
@@ -240,14 +292,14 @@
                     <span id="toggleIcon">♬</span>
                 </div>
                 <div class="panel-content">
-                    <h5 style="text-align:center; color:#d4af37; margin-bottom:15px;">🌙 RAMADAN KAREEM</h5>
-                    <div style="display:flex; align-items:center; gap:15px;">
+                    <h5 style="text-align:center; color:#d4af37; margin-bottom:15px; font-size:16px;">🌙 RAMADAN KAREEM</h5>
+                    <div style="display:flex; align-items:center; gap:12px;">
                         <button class="play-pause-btn" id="playPauseBtn">
                             <i class="fa fa-play"></i>
                         </button>
                         <input type="range" class="seek-slider" id="seekSlider" value="0" step="0.1" min="0"/>
                     </div>
-                    <audio id="ramadanSong" loop="loop">
+                    <audio id="ramadanSong" loop="loop" preload="auto">
                         <source src="/ramadan_ux_design/static/description/song.mp3" type="audio/mpeg"/>
                     </audio>
                 </div>
@@ -258,76 +310,82 @@
             <script type="text/javascript">
                 <![CDATA[
                 document.addEventListener('DOMContentLoaded', function() {
+                    // Stars generation - responsive count
                     const starfield = document.getElementById('starfield');
+                    const isMobile = window.innerWidth <= 768;
+                    
                     if (starfield) {
-                        // Clear any existing stars
                         starfield.innerHTML = '';
                         
-                        // Create 300 falling stars (slower, top to bottom)
-                        for (let i = 0; i < 300; i++) {
+                        // Fewer stars on mobile for performance
+                        const starCount = isMobile ? 150 : 300;
+                        
+                        for (let i = 0; i < starCount; i++) {
                             const star = document.createElement('div');
                             star.className = 'star';
                             
-                            // Random size
                             const r = Math.random();
                             if (r < 0.6) star.classList.add('small');
                             else if (r < 0.9) star.classList.add('medium');
                             else star.classList.add('large');
                             
-                            // Random horizontal position
                             star.style.left = Math.random() * 100 + '%';
-                            
-                            // Random vertical starting position (some start higher, some lower)
                             star.style.top = (Math.random() * 20 - 10) + '%';
                             
-                            // Slower animation duration (4s to 8s)
-                            const duration = 4 + Math.random() * 4;
+                            // Slightly faster on mobile for performance/look
+                            const duration = isMobile ? 3 + Math.random() * 3 : 4 + Math.random() * 4;
                             star.style.animation = `fallDown ${duration}s linear infinite`;
                             
-                            // Random delay (0 to 5s)
                             star.style.animationDelay = (Math.random() * 5) + 's';
                             
                             starfield.appendChild(star);
                         }
-                        
-                        // Create 50 shooting stars with trails (slower, top to bottom)
-                        for (let i = 0; i < 50; i++) {
-                            const shooting = document.createElement('div');
-                            shooting.className = 'shooting-star';
-                            
-                            // Random horizontal position
-                            shooting.style.left = Math.random() * 100 + '%';
-                            
-                            // Start above the viewport
-                            shooting.style.top = '-10%';
-                            
-                            // Slower animation duration (5s to 9s)
-                            const shootDuration = 5 + Math.random() * 4;
-                            shooting.style.animation = `fallShooting ${shootDuration}s linear infinite`;
-                            
-                            // Random delay (0 to 8s)
-                            shooting.style.animationDelay = (Math.random() * 8) + 's';
-                            
-                            // Slight random rotation variation (0-15 degrees)
-                            const rotation = Math.random() * 15;
-                            shooting.style.transform = `rotate(${rotation}deg)`;
-                            
-                            starfield.appendChild(shooting);
-                        }
                     }
 
-                    // Music player
+                    // Music player with autoplay after first interaction
                     const panel = document.getElementById('musicPlayerPanel');
                     const toggle = document.getElementById('panelToggle');
                     const audio = document.getElementById('ramadanSong');
                     const btn = document.getElementById('playPauseBtn');
                     const slider = document.getElementById('seekSlider');
+                    
+                    let userInteracted = false;
+                    
+                    // Function to attempt autoplay after user interaction
+                    function enableAutoplay() {
+                        if (!userInteracted) {
+                            userInteracted = true;
+                            
+                            // Try to play if panel is open or was previously playing
+                            if (panel.classList.contains('open')) {
+                                audio.play().catch(e => console.log("Autoplay prevented:", e));
+                            }
+                            
+                            // Remove listeners after first interaction
+                            document.removeEventListener('click', enableAutoplay);
+                            document.removeEventListener('touchstart', enableAutoplay);
+                            document.removeEventListener('scroll', enableAutoplay);
+                        }
+                    }
+                    
+                    // Listen for first user interaction
+                    document.addEventListener('click', enableAutoplay, { once: true });
+                    document.addEventListener('touchstart', enableAutoplay, { once: true });
+                    document.addEventListener('scroll', enableAutoplay, { once: true });
 
-                    toggle.addEventListener('click', () => {
+                    toggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         panel.classList.toggle('open');
+                        
+                        // If panel opens and user has interacted, try to play
+                        if (panel.classList.contains('open') && userInteracted && audio.paused) {
+                            audio.play().catch(e => console.log("Play failed:", e));
+                            btn.innerHTML = '<i class="fa fa-pause"></i>';
+                        }
                     });
 
-                    btn.addEventListener('click', () => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         if (audio.paused) {
                             audio.play().catch(e => console.log("Play blocked"));
                             btn.innerHTML = '<i class="fa fa-pause"></i>';
@@ -347,6 +405,21 @@
                     slider.addEventListener('input', () => {
                         audio.currentTime = slider.value;
                     });
+                    
+                    // Handle page navigation - maintain play state if possible
+                    window.addEventListener('beforeunload', function() {
+                        if (!audio.paused) {
+                            sessionStorage.setItem('ramadanMusicPlaying', 'true');
+                        } else {
+                            sessionStorage.setItem('ramadanMusicPlaying', 'false');
+                        }
+                    });
+                    
+                    // Check if music was playing before navigation
+                    if (sessionStorage.getItem('ramadanMusicPlaying') === 'true') {
+                        // Will play after user interaction via the enableAutoplay function
+                        console.log("Music was playing, will resume after interaction");
+                    }
                 });
                 ]]>
             </script>
