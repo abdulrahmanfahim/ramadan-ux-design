@@ -4,7 +4,7 @@
         <xpath expr="//head" position="inside">
             <style type="text/css">
                 <![CDATA[
-                /* ===== GOLDEN STARRY SKY ===== */
+                /* ===== GOLDEN STARRY SKY - ABSOLUTELY LOWEST ===== */
                 .starfield {
                     position: fixed;
                     top: 0;
@@ -12,7 +12,7 @@
                     width: 100%;
                     height: 100%;
                     pointer-events: none;
-                    z-index: 0;
+                    z-index: -1;  /* Behind everything */
                     background: radial-gradient(ellipse at 30% 40%, #0a2e28 0%, #020d0b 100%);
                     overflow: hidden;
                 }
@@ -49,7 +49,7 @@
                     }
                 }
 
-                /* ===== SINGLE CRESCENT MOON (lower z-index) ===== */
+                /* ===== SINGLE CRESCENT MOON - BACKGROUND DECORATION ===== */
                 .crescent-moon {
                     position: absolute;
                     top: 60px;
@@ -60,7 +60,7 @@
                     box-shadow: -20px 12px 0 0 #fff9e6;
                     transform: rotate(-10deg);
                     filter: drop-shadow(0 0 15px #ffd700);
-                    z-index: 5;
+                    z-index: 0;  /* Behind all content */
                     opacity: 0.8;
                     pointer-events: none;
                 }
@@ -77,16 +77,16 @@
                     }
                 }
 
-                /* ===== FANOUS CONTAINER (with chain) - lower z-index ===== */
+                /* ===== FANOUS CONTAINER - BACKGROUND DECORATIONS ===== */
                 .fanous-container {
                     position: absolute;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     transform-origin: top center;
-                    z-index: 4;
+                    z-index: 1;  /* Above stars, below content */
                     filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
-                    pointer-events: none;
+                    pointer-events: none;  /* Allow clicks to pass through */
                 }
 
                 /* Chain - thin bronze links */
@@ -105,7 +105,7 @@
                     margin-top: 0px;
                     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
                     transition: filter 0.3s ease;
-                    pointer-events: none;
+                    pointer-events: none;  /* Allow clicks to pass through */
                 }
 
                 /* Desktop lamp positions */
@@ -137,7 +137,7 @@
                     50% { transform: rotate(1.5deg); }
                 }
 
-                /* ===== MUSIC PLAYER PANEL (lower z-index) ===== */
+                /* ===== MUSIC PLAYER PANEL - SIDEBAR UI ===== */
                 .music-player-panel {
                     position: fixed;
                     top: 50%;
@@ -145,7 +145,7 @@
                     transform: translateY(-50%);
                     display: flex;
                     align-items: center;
-                    z-index: 100;
+                    z-index: 1000;  /* Higher than most UI, but still behind modals */
                     transition: right 0.6s ease;
                 }
                 .music-player-panel.open { right: 0; }
@@ -164,7 +164,8 @@
                     border: 1px solid #ffcc33;
                     border-right: none;
                     font-size: 22px;
-                    z-index: 101;
+                    z-index: 1001;
+                    pointer-events: auto;  /* This should be clickable */
                 }
 
                 .panel-content {
@@ -174,7 +175,8 @@
                     padding: 20px;
                     border-left: 2px solid #d4af37;
                     box-shadow: -8px 0 25px rgba(0,0,0,0.5);
-                    z-index: 100;
+                    z-index: 1000;
+                    pointer-events: auto;  /* This should be clickable */
                 }
 
                 /* Mobile music panel adjustments */
@@ -210,7 +212,7 @@
                     color: #020d0b;
                     box-shadow: 0 3px 6px rgba(0,0,0,0.3);
                     transition: transform 0.2s ease;
-                    z-index: 102;
+                    pointer-events: auto;
                 }
                 .play-pause-btn:hover { transform: scale(1.1); background: #ffcc33; }
 
@@ -219,12 +221,13 @@
                     accent-color: #d4af37; 
                     cursor: pointer; 
                     height: 5px;
+                    pointer-events: auto;
                 }
 
-                /* Transparent content area - ensure Odoo UI stays above */
+                /* Transparent content area - normal flow */
                 #wrap {
                     position: relative;
-                    z-index: 10;
+                    z-index: 10;  /* Above decorations */
                     background: transparent !important;
                     border-radius: 20px;
                     margin: 15px;
@@ -234,38 +237,55 @@
                 /* Ensure navbar and hamburger menu stay on top */
                 .navbar, header, .o_main_navbar, .o_menu_sections, .o_menu_toggle {
                     position: relative;
-                    z-index: 200 !important;
+                    z-index: 100 !important;  /* Above decorations, below music panel */
                 }
 
                 /* Ensure form fields and interactive elements are above decorations */
-                input, textarea, select, button:not(.play-pause-btn), .btn, a, .o_dropdown, .modal {
+                input, textarea, select, .btn, a, .o_dropdown, .modal, .dropdown-menu {
                     position: relative;
-                    z-index: 150;
+                    z-index: 50;  /* Above decorations */
+                }
+
+                /* Make sure modals and popups are above everything */
+                .modal, .modal-content, .popover, .tooltip {
+                    z-index: 2000 !important;  /* Above music panel */
                 }
 
                 /* Mobile navbar fixes */
                 @media (max-width: 768px) {
                     .navbar-brand, .o_menu_toggle {
-                        z-index: 250 !important;
+                        z-index: 101 !important;
                     }
                     
                     /* Ensure mobile menu dropdown appears above everything */
                     .o_menu_sections {
-                        z-index: 300 !important;
+                        z-index: 102 !important;
                     }
+                }
+
+                /* Make sure dropdowns are clickable */
+                .dropdown-menu, .o_dropdown_menu {
+                    pointer-events: auto !important;
+                    z-index: 1000 !important;
+                }
+
+                /* Ensure all Odoo content is above decorations */
+                .o_website_apps, .o_website_sale, .o_blog, .o_portal, .o_forum {
+                    position: relative;
+                    z-index: 15;
                 }
                 ]]>
             </style>
         </xpath>
 
         <xpath expr="//body" position="inside">
-            <!-- Starry Sky -->
+            <!-- Starry Sky - Lowest layer -->
             <div class="starfield" id="starfield"></div>
 
-            <!-- Single Crescent (lower z-index) -->
+            <!-- Single Crescent - Low layer -->
             <div class="crescent-moon"></div>
 
-            <!-- Lanterns - Desktop shows 4, mobile shows 2 -->
+            <!-- Lanterns - Low layer, non-interactive -->
             <div class="fanous-container lamp-1">
                 <div class="fanous-chain" style="height:120px;"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
@@ -286,7 +306,7 @@
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern" style="margin-top: 0;"/>
             </div>
 
-            <!-- Music Panel -->
+            <!-- Music Panel - High layer, interactive -->
             <div class="music-player-panel" id="musicPlayerPanel">
                 <div class="panel-toggle" id="panelToggle">
                     <span id="toggleIcon">♬</span>
