@@ -22,16 +22,60 @@
                     background-color: #ffd700;
                     border-radius: 50%;
                     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-                    animation: twinkle 4s infinite ease-in-out;
+                    opacity: 0;
+                    animation: shootAcross var(--duration) linear infinite;
                 }
 
                 .star.small { width: 1px; height: 1px; }
                 .star.medium { width: 2px; height: 2px; box-shadow: 0 0 10px #ffaa00; }
                 .star.large { width: 3px; height: 3px; box-shadow: 0 0 12px #ffaa33; }
 
-                @keyframes twinkle {
-                    0%, 100% { opacity: 0.8; }
-                    50% { opacity: 0.2; }
+                @keyframes shootAcross {
+                    0% {
+                        opacity: 0;
+                        transform: translate(0, 0) scale(0.5);
+                    }
+                    10% {
+                        opacity: 1;
+                        transform: translate(5vw, 5vh) scale(1);
+                    }
+                    90% {
+                        opacity: 1;
+                        transform: translate(90vw, 90vh) scale(1);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: translate(100vw, 100vh) scale(0.5);
+                    }
+                }
+
+                /* Additional shooting stars for more dynamic effect */
+                .shooting-star {
+                    position: absolute;
+                    width: 100px;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent, #ffd700, #ffffff, #ffd700, transparent);
+                    filter: blur(1px);
+                    opacity: 0;
+                    animation: shootLinear var(--shoot-duration) linear infinite;
+                    transform-origin: left center;
+                }
+
+                @keyframes shootLinear {
+                    0% {
+                        opacity: 0;
+                        transform: translate(-10vw, -10vh) rotate(25deg);
+                    }
+                    20% {
+                        opacity: 1;
+                    }
+                    80% {
+                        opacity: 1;
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: translate(110vw, 110vh) rotate(25deg);
+                    }
                 }
 
                 /* ===== SINGLE CRESCENT MOON ===== */
@@ -82,7 +126,7 @@
                     filter: drop-shadow(0 0 20px #ffaa00);
                 }
 
-                /* Gentle swinging for lanterns - FASTER speeds (2.5s to 4s) */
+                /* Gentle swinging for lanterns */
                 .lamp-1 { left: 2%; top: 10%; animation: gentleSwing 3.2s infinite ease-in-out; }
                 .lamp-2 { left: 15%; top: 25%; animation: gentleSwing 2.8s infinite ease-in-out; }
                 .lamp-3 { right: 5%; top: 15%; animation: gentleSwing 3.5s infinite ease-in-out; }
@@ -214,20 +258,59 @@
             <script type="text/javascript">
                 <![CDATA[
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Stars generation (300 stars)
                     const starfield = document.getElementById('starfield');
                     if (starfield) {
-                        for (let i = 0; i < 300; i++) {
+                        // Clear any existing stars
+                        starfield.innerHTML = '';
+                        
+                        // Create 200 fast-moving stars (shooting across screen)
+                        for (let i = 0; i < 200; i++) {
                             const star = document.createElement('div');
                             star.className = 'star';
+                            
+                            // Random size
                             const r = Math.random();
                             if (r < 0.6) star.classList.add('small');
                             else if (r < 0.9) star.classList.add('medium');
                             else star.classList.add('large');
-                            star.style.left = Math.random() * 100 + '%';
-                            star.style.top = Math.random() * 100 + '%';
+                            
+                            // Random starting position (off-screen or on-screen)
+                            star.style.left = (Math.random() * 30 - 15) + '%'; // -15% to 15% (can start off-screen)
+                            star.style.top = (Math.random() * 30 - 15) + '%';
+                            
+                            // Random animation duration (0.8s to 3s) - FAST!
+                            const duration = 0.8 + Math.random() * 2.2;
+                            star.style.setProperty('--duration', duration + 's');
+                            
+                            // Random delay (0 to 5s)
                             star.style.animationDelay = (Math.random() * 5) + 's';
+                            
                             starfield.appendChild(star);
+                        }
+                        
+                        // Create 50 extra shooting stars (long trails)
+                        for (let i = 0; i < 50; i++) {
+                            const shooting = document.createElement('div');
+                            shooting.className = 'shooting-star';
+                            
+                            // Random position
+                            shooting.style.left = (Math.random() * 30 - 15) + '%';
+                            shooting.style.top = (Math.random() * 30 - 15) + '%';
+                            
+                            // Random animation duration (1s to 2.5s)
+                            const shootDuration = 1 + Math.random() * 1.5;
+                            shooting.style.setProperty('--shoot-duration', shootDuration + 's');
+                            
+                            // Random delay (0 to 4s)
+                            shooting.style.animationDelay = (Math.random() * 4) + 's';
+                            
+                            // Random rotation for varied directions
+                            const rotation = 15 + Math.random() * 30; // 15 to 45 degrees
+                            shooting.style.animation = `shootLinear ${shootDuration}s linear infinite`;
+                            shooting.style.animationDelay = (Math.random() * 4) + 's';
+                            shooting.style.transform = `rotate(${rotation}deg)`;
+                            
+                            starfield.appendChild(shooting);
                         }
                     }
 
