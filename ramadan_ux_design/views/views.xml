@@ -4,7 +4,7 @@
         <xpath expr="//head" position="inside">
             <style type="text/css">
                 <![CDATA[
-                /* ===== GOLDEN STARRY SKY - ABSOLUTELY LOWEST ===== */
+                /* ===== GOLDEN STARRY SKY WITH GLOW ===== */
                 .starfield {
                     position: fixed;
                     top: 0;
@@ -21,25 +21,36 @@
                     position: absolute;
                     background-color: #ffd700;
                     border-radius: 50%;
-                    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
                     opacity: 0;
                     animation: fallDown linear infinite;
                 }
 
-                .star.small { width: 1px; height: 1px; }
-                .star.medium { width: 2px; height: 2px; box-shadow: 0 0 10px #ffaa00; }
-                .star.large { width: 3px; height: 3px; box-shadow: 0 0 12px #ffaa33; }
+                .star.small { 
+                    width: 2px; 
+                    height: 2px; 
+                    box-shadow: 0 0 12px 2px #ffd700, 0 0 20px 4px #ffaa33;
+                }
+                .star.medium { 
+                    width: 3px; 
+                    height: 3px; 
+                    box-shadow: 0 0 15px 3px #ffd700, 0 0 30px 6px #ffaa33;
+                }
+                .star.large { 
+                    width: 4px; 
+                    height: 4px; 
+                    box-shadow: 0 0 20px 4px #ffd700, 0 0 40px 8px #ffaa33;
+                }
 
                 @keyframes fallDown {
                     0% {
                         opacity: 0;
                         transform: translateY(-10vh) scale(0.5);
                     }
-                    5% {
+                    10% {
                         opacity: 1;
                         transform: translateY(0) scale(1);
                     }
-                    95% {
+                    90% {
                         opacity: 1;
                         transform: translateY(90vh) scale(1);
                     }
@@ -49,35 +60,52 @@
                     }
                 }
 
-                /* ===== SINGLE CRESCENT MOON - BACKGROUND DECORATION ===== */
+                /* ===== ENHANCED CRESCENT MOON ===== */
                 .crescent-moon {
                     position: absolute;
                     top: 60px;
                     left: 5%;
-                    width: 120px;
-                    height: 120px;
+                    width: 140px;
+                    height: 140px;
                     border-radius: 50%;
-                    box-shadow: -20px 12px 0 0 #fff9e6;
+                    box-shadow: -25px 15px 0 0 #fff9e6, 0 0 30px 10px rgba(255, 215, 0, 0.6);
                     transform: rotate(-10deg);
-                    filter: drop-shadow(0 0 15px #ffd700);
+                    filter: drop-shadow(0 0 30px #ffaa00) drop-shadow(0 0 60px #ff7700);
                     z-index: 0;
-                    opacity: 0.8;
+                    opacity: 0.9;
                     pointer-events: none;
+                    animation: moonGlow 4s infinite alternate;
+                }
+
+                .crescent-moon::after {
+                    content: '';
+                    position: absolute;
+                    top: -10px;
+                    left: -10px;
+                    width: 160px;
+                    height: 160px;
+                    border-radius: 50%;
+                    background: radial-gradient(circle at 30% 30%, rgba(255,215,0,0.3), transparent 70%);
+                    filter: blur(15px);
+                }
+
+                @keyframes moonGlow {
+                    0% { filter: drop-shadow(0 0 20px #ffaa00) drop-shadow(0 0 40px #ff7700); }
+                    100% { filter: drop-shadow(0 0 40px #ffdd55) drop-shadow(0 0 80px #ffaa00); }
                 }
 
                 /* Mobile adjustments for crescent */
                 @media (max-width: 768px) {
                     .crescent-moon {
-                        top: 100px;
-                        left: 5%;
-                        width: 60px;
-                        height: 60px;
-                        box-shadow: -8px 5px 0 0 #fff9e6;
-                        opacity: 0.6;
+                        top: 80px;
+                        left: 3%;
+                        width: 90px;
+                        height: 90px;
+                        box-shadow: -15px 9px 0 0 #fff9e6;
                     }
                 }
 
-                /* ===== FANOUS CONTAINER - BACKGROUND DECORATIONS ===== */
+                /* ===== FANOUS CONTAINER - LEFT LAMP CONNECTED TO MOON ===== */
                 .fanous-container {
                     position: absolute;
                     display: flex;
@@ -85,38 +113,62 @@
                     align-items: center;
                     transform-origin: top center;
                     z-index: 1;
-                    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
+                    filter: drop-shadow(0 10px 8px rgba(0,0,0,0.6));
                     pointer-events: none;
                 }
 
-                /* Chain - thin bronze links */
+                /* Chain - more realistic with glow */
                 .fanous-chain {
                     width: 3px;
-                    height: 100px;
-                    background: repeating-linear-gradient(45deg, #b8860b 0px 3px, #8b6913 3px 6px);
-                    box-shadow: 0 0 5px #b8860b;
+                    background: repeating-linear-gradient(45deg, #ffd700 0px 4px, #b8860b 4px 8px);
+                    box-shadow: 0 0 15px #ffaa00, 0 0 30px #ff7700;
+                    border-radius: 2px;
                 }
 
-                /* The lantern image - connected directly to chain */
+                /* The lantern image - enhanced glow */
                 .fanous-image {
                     display: block;
                     max-width: 120px;
                     height: auto;
                     margin-top: 0px;
-                    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+                    filter: drop-shadow(0 0 15px #ffaa00) drop-shadow(0 0 30px #ff7700);
                     transition: filter 0.3s ease;
                     pointer-events: none;
                 }
 
-                /* Desktop lamp positions - FIXED */
-                .lamp-1 { 
-                    left: 3%; 
-                    top: 180px;  /* Increased from 12% to fixed 180px to clear crescent moon */
-                    animation: gentleSwing 3.5s infinite ease-in-out; 
+                .fanous-image:hover {
+                    filter: drop-shadow(0 0 30px #ffdd55) drop-shadow(0 0 60px #ffaa00);
                 }
-                .lamp-2 { left: 18%; top: 28%; animation: gentleSwing 4s infinite ease-in-out; }
-                .lamp-3 { right: 5%; top: 18%; animation: gentleSwing 3.8s infinite ease-in-out; }
-                .lamp-4 { right: 18%; top: 32%; animation: gentleSwing 4.2s infinite ease-in-out; }
+
+                /* Desktop lamp positions */
+                .lamp-1 { 
+                    left: 2%; 
+                    top: 150px;  /* Aligned with moon's tip */
+                }
+                .lamp-1 .fanous-chain {
+                    height: 100px;  /* Chain connects to moon tip */
+                }
+                
+                .lamp-2 { 
+                    left: 18%; 
+                    top: 28%; 
+                    animation: gentleSwing 4s infinite ease-in-out; 
+                }
+                .lamp-2 .fanous-chain { height: 150px; }
+                
+                .lamp-3 { 
+                    right: 5%; 
+                    top: 18%; 
+                    animation: gentleSwing 3.8s infinite ease-in-out; 
+                }
+                .lamp-3 .fanous-chain { height: 100px; }
+                
+                .lamp-4 { 
+                    right: 18%; 
+                    top: 32%; 
+                    animation: gentleSwing 4.2s infinite ease-in-out; 
+                }
+                .lamp-4 .fanous-chain { height: 140px; }
 
                 /* Mobile: only 2 lanterns, smaller, repositioned */
                 @media (max-width: 768px) {
@@ -124,35 +176,36 @@
                     .lamp-2, .lamp-3 { display: none; }
                     
                     .lamp-1 { 
-                        left: 5%; 
-                        top: 180px;  /* Increased from 150px to 180px - away from moon */
+                        left: 3%; 
+                        top: 150px;
                     }
-                    .lamp-4 { 
-                        right: 5%; 
-                        top: 300px;
+                    .lamp-1 .fanous-chain { 
+                        height: 70px; 
                     }
                     
-                    .fanous-chain {
-                        height: 40px;  /* MUCH SHORTER chains */
-                        width: 2px;
+                    .lamp-4 { 
+                        right: 3%; 
+                        top: 250px;
+                    }
+                    .lamp-4 .fanous-chain { 
+                        height: 60px; 
                     }
                     
                     .fanous-image {
-                        max-width: 55px;
+                        max-width: 70px;
                     }
                 }
 
                 /* Small phones */
                 @media (max-width: 480px) {
-                    .lamp-1 { top: 160px; }
-                    .lamp-4 { top: 280px; }
+                    .lamp-1 { top: 130px; }
+                    .lamp-1 .fanous-chain { height: 60px; }
                     
-                    .fanous-chain {
-                        height: 35px;  /* Even shorter */
-                    }
+                    .lamp-4 { top: 220px; }
+                    .lamp-4 .fanous-chain { height: 50px; }
                     
                     .fanous-image {
-                        max-width: 45px;
+                        max-width: 55px;
                     }
                 }
 
@@ -161,129 +214,64 @@
                     50% { transform: rotate(1.5deg); }
                 }
 
-                /* ===== MUSIC PLAYER PANEL - FIXED VISIBILITY ===== */
-                .music-player-panel {
+                /* ===== MUSIC TOGGLE BUTTON - DIRECT MUSIC CONTROL ===== */
+                .music-toggle {
                     position: fixed;
                     top: 50%;
-                    right: -280px;
+                    right: 20px;
                     transform: translateY(-50%);
-                    display: flex;
-                    align-items: center;
-                    z-index: 1000;
-                    transition: right 0.6s ease;
-                }
-                .music-player-panel.open { right: 0; }
-
-                .panel-toggle {
-                    width: 40px;
-                    height: 120px;
-                    background: linear-gradient(135deg, #d4af37, #b8860b);
+                    width: 60px;
+                    height: 60px;
+                    background: linear-gradient(135deg, #ffd700, #b8860b);
                     color: #020d0b;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
-                    border-radius: 15px 0 0 15px;
-                    box-shadow: -3px 0 10px rgba(0,0,0,0.4);
-                    border: 1px solid #ffcc33;
-                    border-right: none;
-                    font-size: 22px;
-                    z-index: 1001;
-                    pointer-events: auto;
-                }
-
-                .panel-content {
-                    width: 280px;
-                    background: rgba(8, 20, 15, 0.95);
-                    backdrop-filter: blur(10px);
-                    padding: 20px;
-                    border-left: 2px solid #d4af37;
-                    box-shadow: -8px 0 25px rgba(0,0,0,0.5);
+                    border-radius: 50%;
+                    box-shadow: 0 0 20px #ffaa00, 0 0 40px #ff7700, 0 4px 15px rgba(0,0,0,0.5);
+                    border: 2px solid #ffcc33;
+                    font-size: 28px;
                     z-index: 1000;
                     pointer-events: auto;
+                    transition: all 0.3s ease;
+                    animation: buttonPulse 2s infinite alternate;
                 }
 
-                /* Mobile music panel - FIXED VISIBILITY */
+                .music-toggle:hover {
+                    transform: translateY(-50%) scale(1.15);
+                    background: linear-gradient(135deg, #ffdd55, #d4af37);
+                    box-shadow: 0 0 30px #ffdd55, 0 0 60px #ffaa00;
+                }
+
+                .music-toggle.playing {
+                    background: linear-gradient(135deg, #ffaa33, #cc7700);
+                    box-shadow: 0 0 30px #ff5500, 0 0 60px #ff3300;
+                }
+
+                @keyframes buttonPulse {
+                    0% { box-shadow: 0 0 20px #ffaa00, 0 0 40px #ff7700; }
+                    100% { box-shadow: 0 0 30px #ffdd55, 0 0 60px #ffaa00; }
+                }
+
+                /* Mobile music toggle adjustment */
                 @media (max-width: 768px) {
-                    .music-player-panel {
-                        right: -200px;  /* Adjusted for smaller screen */
-                        top: 55%;
-                        display: flex !important;  /* Force display */
-                        opacity: 1 !important;  /* Ensure visible */
-                        visibility: visible !important;
-                    }
-                    
-                    .music-player-panel.open { 
-                        right: 0; 
-                    }
-                    
-                    .panel-content {
-                        width: 200px;
-                        padding: 12px;
-                        display: block !important;
-                    }
-                    
-                    .panel-toggle {
-                        width: 35px;
-                        height: 90px;
-                        font-size: 20px;
-                        display: flex !important;
-                    }
-                    
-                    .play-pause-btn {
-                        width: 36px;
-                        height: 36px;
-                    }
-                    
-                    .seek-slider {
-                        height: 4px;
-                    }
-                    
-                    h5 {
-                        font-size: 14px !important;
-                        margin-bottom: 8px !important;
+                    .music-toggle {
+                        width: 50px;
+                        height: 50px;
+                        right: 15px;
+                        font-size: 24px;
                     }
                 }
 
-                /* Small phones - ensure visibility */
+                /* Small phones */
                 @media (max-width: 480px) {
-                    .music-player-panel {
-                        right: -180px;
-                        top: 58%;
+                    .music-toggle {
+                        width: 45px;
+                        height: 45px;
+                        right: 10px;
+                        font-size: 22px;
                     }
-                    
-                    .panel-content {
-                        width: 180px;
-                        padding: 10px;
-                    }
-                    
-                    .panel-toggle {
-                        width: 32px;
-                        height: 80px;
-                        font-size: 18px;
-                    }
-                }
-
-                .play-pause-btn {
-                    background: #d4af37;
-                    border: none;
-                    border-radius: 50%;
-                    width: 45px;
-                    height: 45px;
-                    cursor: pointer;
-                    color: #020d0b;
-                    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-                    transition: transform 0.2s ease;
-                    pointer-events: auto;
-                }
-                .play-pause-btn:hover { transform: scale(1.1); background: #ffcc33; }
-
-                .seek-slider { 
-                    flex: 1; 
-                    accent-color: #d4af37; 
-                    cursor: pointer; 
-                    height: 5px;
-                    pointer-events: auto;
                 }
 
                 /* Transparent content area */
@@ -333,57 +321,49 @@
         </xpath>
 
         <xpath expr="//body" position="inside">
-            <!-- Starry Sky -->
+            <!-- Starry Sky with Glow -->
             <div class="starfield" id="starfield"></div>
 
-            <!-- Single Crescent -->
+            <!-- Enhanced Crescent Moon -->
             <div class="crescent-moon"></div>
 
-            <!-- Lanterns -->
+            <!-- Lanterns with Glow -->
             <div class="fanous-container lamp-1">
-                <div class="fanous-chain" style="height:120px;"></div>
+                <div class="fanous-chain"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-2">
-                <div class="fanous-chain" style="height:150px;"></div>
+                <div class="fanous-chain"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-3">
-                <div class="fanous-chain" style="height:100px;"></div>
+                <div class="fanous-chain"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
             <div class="fanous-container lamp-4">
-                <div class="fanous-chain" style="height:140px;"></div>
+                <div class="fanous-chain"></div>
                 <img class="fanous-image" src="/ramadan_ux_design/static/description/fanoos.png" alt="Ramadan Lantern"/>
             </div>
 
-            <!-- Music Panel -->
-            <div class="music-player-panel" id="musicPlayerPanel">
-                <div class="panel-toggle" id="panelToggle">
-                    <span id="toggleIcon">♬</span>
-                </div>
-                <div class="panel-content">
-                    <h5 style="text-align:center; color:#d4af37; margin-bottom:15px; font-size:16px;">🌙 RAMADAN KAREEM</h5>
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <button class="play-pause-btn" id="playPauseBtn">
-                            <i class="fa fa-play"></i>
-                        </button>
-                        <input type="range" class="seek-slider" id="seekSlider" value="0" step="0.1" min="0"/>
-                    </div>
-                    <audio id="ramadanSong" loop="loop" preload="auto">
-                        <source src="/ramadan_ux_design/static/description/song.mp3" type="audio/mpeg"/>
-                    </audio>
-                </div>
+            <!-- Music Toggle Button (direct control) -->
+            <div class="music-toggle" id="musicToggle">
+                <span id="toggleIcon">♬</span>
             </div>
+
+            <!-- Hidden Audio Element -->
+            <audio id="ramadanSong" loop="loop" preload="auto">
+                <source src="/ramadan_ux_design/static/description/song.mp3" type="audio/mpeg"/>
+            </audio>
         </xpath>
 
         <xpath expr="//body" position="after">
             <script type="text/javascript">
                 <![CDATA[
                 document.addEventListener('DOMContentLoaded', function() {
+                    // Stars generation with enhanced glow
                     const starfield = document.getElementById('starfield');
                     const isMobile = window.innerWidth <= 768;
                     
@@ -411,21 +391,17 @@
                         }
                     }
 
-                    // Music player
-                    const panel = document.getElementById('musicPlayerPanel');
-                    const toggle = document.getElementById('panelToggle');
+                    // Direct music control (no container)
+                    const toggle = document.getElementById('musicToggle');
                     const audio = document.getElementById('ramadanSong');
-                    const btn = document.getElementById('playPauseBtn');
-                    const slider = document.getElementById('seekSlider');
+                    const icon = document.getElementById('toggleIcon');
                     
                     let userInteracted = false;
                     
+                    // Function to enable audio context after user interaction
                     function enableAutoplay() {
                         if (!userInteracted) {
                             userInteracted = true;
-                            if (panel.classList.contains('open')) {
-                                audio.play().catch(e => console.log("Autoplay prevented:", e));
-                            }
                             document.removeEventListener('click', enableAutoplay);
                             document.removeEventListener('touchstart', enableAutoplay);
                             document.removeEventListener('scroll', enableAutoplay);
@@ -436,41 +412,50 @@
                     document.addEventListener('touchstart', enableAutoplay, { once: true });
                     document.addEventListener('scroll', enableAutoplay, { once: true });
 
+                    // Toggle play/pause on button click
                     toggle.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        panel.classList.toggle('open');
                         
-                        if (panel.classList.contains('open') && userInteracted && audio.paused) {
-                            audio.play().catch(e => console.log("Play failed:", e));
-                            btn.innerHTML = '<i class="fa fa-pause"></i>';
-                        }
-                    });
-
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation();
                         if (audio.paused) {
-                            audio.play().catch(e => console.log("Play blocked"));
-                            btn.innerHTML = '<i class="fa fa-pause"></i>';
+                            // Only play if user has interacted
+                            if (userInteracted) {
+                                audio.play().catch(e => console.log("Play failed:", e));
+                                toggle.classList.add('playing');
+                                icon.innerHTML = '♩';
+                            } else {
+                                console.log("Waiting for user interaction first");
+                                // Play anyway - browsers will block but we try
+                                audio.play().catch(e => {
+                                    console.log("Autoplay blocked - user must interact first");
+                                    // Still show as playing attempt
+                                    toggle.classList.add('playing');
+                                    icon.innerHTML = '♩';
+                                });
+                            }
                         } else {
                             audio.pause();
-                            btn.innerHTML = '<i class="fa fa-play"></i>';
+                            toggle.classList.remove('playing');
+                            icon.innerHTML = '♬';
                         }
                     });
 
-                    audio.addEventListener('timeupdate', () => {
-                        if (!isNaN(audio.duration)) {
-                            slider.max = audio.duration;
-                            slider.value = audio.currentTime;
-                        }
-                    });
-
-                    slider.addEventListener('input', () => {
-                        audio.currentTime = slider.value;
+                    // Update icon when audio ends
+                    audio.addEventListener('ended', () => {
+                        toggle.classList.remove('playing');
+                        icon.innerHTML = '♬';
                     });
                     
+                    // Remember play state across pages
                     window.addEventListener('beforeunload', function() {
                         sessionStorage.setItem('ramadanMusicPlaying', audio.paused ? 'false' : 'true');
                     });
+                    
+                    // Check if music was playing before navigation
+                    if (sessionStorage.getItem('ramadanMusicPlaying') === 'true') {
+                        // Mark as playing but don't autoplay - wait for interaction
+                        toggle.classList.add('playing');
+                        icon.innerHTML = '♩';
+                    }
                 });
                 ]]>
             </script>
